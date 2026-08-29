@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+*.png
+preview_*.png
+.DS_Store

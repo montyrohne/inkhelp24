@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text zu Handschrift</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1><span class="logo">✍️</span> Text zu Handschrift</h1>
+        <p class="subtitle">Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.</p>
+
+        <div class="layout">
+            <div class="panel">
+                <label for="text">Dein Text</label>
+                <textarea id="text" rows="8"
+                    placeholder="Schreibe hier deinen Text hinein..."></textarea>
+                <div class="text-meta">
+                    <span id="char-count">0 Zeichen · geschätzt 1 Seite</span>
+                    <button id="btn-example" type="button" class="btn subtle">Beispieltext</button>
+                </div>
+
+                <!-- Basis & Font -->
+                <div class="section-title">Grundlagen</div>
+                <div class="row">
+                    <div class="field">
+                        <label for="font">Handschrift</label>
+                        <select id="font">
+                            {% for f in fonts %}
+                            <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="paper">Papierformat</label>
+                        <select id="paper">
+                            <option value="A4" selected>A4</option>
+                            <option value="LETTER">Letter</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label for="font_size">Schriftgröße</label>
+                        <input type="number" id="font_size" value="42" min="20" max="80" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="wortabstand">Wortabstand</label>
+                        <input type="number" id="wortabstand" value="50" min="0" max="100" step="5">
+                    </div>
+                </div>
+
+                <!-- Natürlichkeit -->
+                <div class="section-title">Natürlichkeit</div>
+                <div class="slider">
+                    <label for="neigung">Schräglage</label>
+                    <input type="range" id="neigung" min="-50" max="50" value="0">
+                    <span class="val" data-for="neigung">0°</span>
+                </div>
+
+                <!-- Details -->
+                <div class="section-title">Details</div>
+                <div class="slider">
+                    <label for="durchstreichung">Durchstreichungen</label>
+                    <input type="range" id="durchstreichung" min="0" max="100" value="0">
+                    <span class="val" data-for="durchstreichung">0%</span>
+                </div>
+                <div class="slider">
+                    <label for="fehlende">Fehlende Buchstaben</label>
+                    <input type="range" id="fehlende" min="0" max="100" value="0">
+                    <span class="val" data-for="fehlende">0%</span>
+                </div>
+                <div class="slider">
+                    <label for="rechtschreibfehler">Rechtschreibfehler</label>
+                    <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
+                    <span class="val" data-for="rechtschreibfehler">0%</span>
+                </div>
+
+                <!-- Papier-Stil -->
+                <div class="section-title">Papier-Stil</div>
+                <div class="row">
+                    <div class="field">
+                        <label for="papier_style">Art</label>
+                        <select id="papier_style">
+                            <option value="weiss" selected>Weiß</option>
+                            <option value="liniert">Liniert</option>
+                            <option value="kariert">Kariert</option>
+                            <option value="punkte">Punktraster</option>
+                            <option value="alt">Alt/vergilbt</option>
+                        </select>
+                    </div>
+                    <div class="field check-field">
+                        <label><input type="checkbox" id="randlinien"> Randlinien</label>
+                    </div>
+                    <div class="field check-field">
+                        <label><input type="checkbox" id="datum" checked> Datum</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label for="rand_links_cm">Linker Abstand (cm)</label>
+                        <input type="number" id="rand_links_cm" value="2.5" min="0" max="5" step="0.1">
+                    </div>
+                    <div class="field">
+                        <label for="rand_rechts_cm">Rechter Abstand (cm)</label>
+                        <input type="number" id="rand_rechts_cm" value="2.5" min="0" max="5" step="0.1">
+                    </div>
+                    <div class="field check-field">
+                        <label><input type="checkbox" id="kariert_jede_zweite"> Jede 2. Zeile (kariert)</label>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-render" class="btn primary">Vorschau</button>
+                    <button id="btn-png" class="btn">Als PNG (ZIP)</button>
+                    <button id="btn-pdf" class="btn">Als PDF laden</button>
+                </div>
+
+                <p id="status" class="status"><span id="spinner" class="spinner" style="display:none"></span></p>
+            </div>
+
+            <div class="panel preview-panel">
+                <h2>Vorschau</h2>
+                <div id="preview" class="preview">
+                    <p class="placeholder">Text eingeben und auf „Vorschau" klicken.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SLIDERS = ['neigung','durchstreichung','fehlende','rechtschreibfehler'];
+        function fmtVal(id, v) {
+            if (id === 'neigung') return v >= 0 ? '+' + v + '°' : v + '°';
+            return v + '%';
+        }
+        SLIDERS.forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener('input', () => {
+                document.querySelector(`.val[data-for="${id}"]`).textContent = fmtVal(id, el.value);
+            });
+        });
+
+        function payload() {
+            const body = {
+                text: document.getElementById('text').value,
+                font: document.getElementById('font').value,
+                paper: document.getElementById('paper').value,
+                font_size: parseFloat(document.getElementById('font_size').value),
+                wortabstand: parseInt(document.getElementById('wortabstand').value) / 100,
+                papier_style: document.getElementById('papier_style').value,
+                randlinien: document.getElementById('randlinien').checked,
+                datum: document.getElementById('datum').checked,
+                rand_links_cm: parseFloat(document.getElementById('rand_links_cm').value),
+                rand_rechts_cm: parseFloat(document.getElementById('rand_rechts_cm').value),
+                kariert_jede_zweite: document.getElementById('kariert_jede_zweite').checked,
+            };
+            SLIDERS.forEach(id => {
+                if (id === 'neigung') {
+                    body[id] = parseInt(document.getElementById(id).value) / 50; // -1..+1
+                } else {
+                    body[id] = parseInt(document.getElementById(id).value) / 100;
+                }
+            });
+            return JSON.stringify(body);
+        }
+
+        const preview = document.getElementById('preview');
+        const status = document.getElementById('status');
+        const charCount = document.getElementById('char-count');
+
+        function setBusy(busy) {
+            document.querySelectorAll('.btn').forEach(b => {
+                b.disabled = busy;
+                b.classList.toggle('disabled', busy);
+            });
+            const s = document.getElementById('spinner');
+            if (s) s.style.display = busy ? 'inline-block' : 'none';
+        }
+
+        function pagesFromResult(pages) {
+            preview.innerHTML = '';
+            pages.forEach((b64, i) => {
+                const img = document.createElement('img');
+                img.src = 'data:image/png;base64,' + b64;
+                img.alt = 'Seite ' + (i + 1);
+                img.classList.add('page-img');
+                preview.appendChild(img);
+            });
+            return pages.length;
+        }
+
+        async function post(path) {
+            status.textContent = 'Läuft...';
+            setBusy(true);
+            try {
+                const res = await fetch(path, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload(),
+                });
+                const contentType = res.headers.get('Content-Type') || '';
+                if (!res.ok) {
+                    const body = await res.json().catch(() => ({}));
+                    throw new Error(body.error || 'Fehler (' + res.status + ')');
+                }
+                if (contentType.includes('application/json')) {
+                    const data = await res.json();
+                    const n = pagesFromResult(data.pages || []);
+                    status.textContent = 'Vorschau erstellt (' + n + ' Seite' + (n === 1 ? '' : 'n') + ').';
+                } else if (contentType.includes('application/zip')) {
+                    const blob = await res.blob();
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'handschrift-seiten.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    status.textContent = 'PNG-Dateien heruntergeladen (ZIP).';
+                } else if (contentType.includes('application/pdf')) {
+                    const blob = await res.blob();
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'handschrift.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    status.textContent = 'PDF heruntergeladen.';
+                }
+            } catch (err) {
+                status.textContent = err.message;
+            } finally {
+                setBusy(false);
+            }
+        }
+
+        function updateCharCount() {
+            const text = document.getElementById('text').value;
+            const chars = text.length;
+            // grobe Schätzung: ~300 Zeichen pro Seite
+            const pages = Math.max(1, Math.ceil(chars / 300));
+            charCount.textContent = chars + ' Zeichen · geschätzt ' + pages + ' Seite' + (pages === 1 ? '' : 'n');
+        }
+        document.getElementById('text').addEventListener('input', updateCharCount);
+        updateCharCount();
+
+        // Auto-Refresh der Vorschau mit kurzer Verzögerung (Debounce)
+        let debounceTimer = null;
+        function scheduleRender() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                if (document.getElementById('text').value.trim()) {
+                    post('/api/render');
+                }
+            }, 700);
+        }
+        document.querySelectorAll('#text, #font, #paper, #font_size, #wortabstand, #papier_style, #rand_links_cm, #rand_rechts_cm')
+            .forEach(el => el.addEventListener('input', scheduleRender));
+        document.querySelectorAll('#neigung, #durchstreichung, #fehlende, #rechtschreibfehler')
+            .forEach(el => el.addEventListener('input', scheduleRender));
+        document.querySelectorAll('#randlinien, #datum, #kariert_jede_zweite')
+            .forEach(el => el.addEventListener('change', scheduleRender));
+
+        // Beispieltext einfügen
+        const BEISPIELE = [
+            "Liebe Oma, ich hoffe es geht dir gut! Das Wetter ist heute wirklich schön, die Sonne scheint den ganzen Tag. Ich war heute mit meinen Freunden im Park spazieren und wir haben uns sehr gut unterhalten. Wann besuchst du uns wieder? Ich freue mich schon auf dich!",
+            "Mein Tagebuch, heute war ein ganz besonderer Tag. Ich habe endlich mein Projekt abgeschlossen und bin sehr stolz darauf. Es war viel Arbeit, aber es hat sich gelohnt. Morgen werde ich es meiner Familie zeigen und hoffentlich gefällt es ihnen genauso gut wie mir.",
+            "Sehr geehrte Frau Müller, hiermit bestätige ich den Eingang Ihres Schreibens vom 15. des Monats. Gerne komme ich Ihrem Wunsch nach und stelle Ihnen die angeforderten Unterlagen zu. Für Rückfragen stehe ich Ihnen jederzeit gerne zur Verfügung. Mit freundlichen Grüßen.",
+        ];
+        document.getElementById('btn-example').addEventListener('click', () => {
+            const pick = BEISPIELE[Math.floor(Math.random() * BEISPIELE.length)];
+            document.getElementById('text').value = pick;
+            updateCharCount();
+            post('/api/render');
+        });
+
+        document.getElementById('btn-render').addEventListener('click', () => post('/api/render'));
+        document.getElementById('btn-pdf').addEventListener('click', () => post('/api/pdf'));
+        document.getElementById('btn-png').addEventListener('click', () => post('/api/png'));
+
+        // Beim Öffnen einen Beispieltext anzeigen
+        document.getElementById('text').value = BEISPIELE[0];
+        updateCharCount();
+        post('/api/render');
+    </script>
+</body>
+</html>

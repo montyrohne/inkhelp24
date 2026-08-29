@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inkhelp24 – Deine Handschrift</title>
+    <style>
+        :root {
+            --accent: #4f46e5;
+            --violet: #7c3aed;
+            --pink: #ec4899;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(150deg, #eaf0ff 0%, #efe9ff 40%, #fde8f2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 20px;
+            color: #1f2937;
+        }
+        .hero {
+            max-width: 720px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--violet) 55%, var(--pink));
+            color: #fff;
+            font-size: 30px;
+            box-shadow: 0 10px 28px rgba(124, 58, 237, 0.4);
+        }
+        .logo-name {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+        }
+        h1 .grad {
+            background: linear-gradient(135deg, var(--accent), var(--pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .sub {
+            font-size: 17px;
+            color: #6b7280;
+            max-width: 560px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 34px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent), var(--violet));
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 38px rgba(79, 70, 229, 0.5);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 44px;
+            text-align: left;
+        }
+        .feature {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 14px;
+            padding: 18px 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+        .feature .ico {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .feature .t {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .feature .d {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+        @media (max-width: 720px) {
+            h1 { font-size: 32px; }
+            .features { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 420px) {
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="logo">
+            <span class="logo-badge">✍️</span>
+            <span class="logo-name">inkhelp24</span>
+        </div>
+
+        <h1>Verwandle deinen Text in<br>echte <span class="grad">Handschrift</span></h1>
+        <p class="sub">
+            Willkommen bei <strong>inkhelp24</strong>! Gib deinen Text ein und lass ihn
+            in eine möglichst natürlich wirkende, handgeschriebene Notiz verwandeln –
+            als Bild oder PDF, mit eigenem Papier und persönlicher Handschrift.
+        </p>
+
+        <a class="cta" href="/builder">Los geht's&nbsp;→</a>
+
+        <div class="features">
+            <div class="feature">
+                <div class="ico">✍️</div>
+                <div class="t">Echte Handschrift</div>
+                <div class="d">5 natürliche Schriftarten mit Schwung</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📄</div>
+                <div class="t">Papier wählen</div>
+                <div class="d">Liniert, kariert, Punktraster oder Alt</div>
+            </div>
+            <div class="feature">
+                <div class="ico">🎨</div>
+                <div class="t">Individuell</div>
+                <div class="d">Schräglage, Ränder, Datum &amp; mehr</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📥</div>
+                <div class="t">PDF &amp; PNG</div>
+                <div class="d">Download aller Seiten als Datei</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
