@@ -83,6 +83,21 @@ def index():
     return render_template("index.html", fonts=sorted(FONTS.keys()))
 
 
+@app.route("/impressum")
+def impressum():
+    return render_template("impressum.html")
+
+
+@app.route("/datenschutz")
+def datenschutz():
+    return render_template("datenschutz.html")
+
+
+@app.route("/nutzungsbedingungen")
+def nutzungsbedingungen():
+    return render_template("nutzungsbedingungen.html")
+
+
 @app.route("/api/render", methods=["POST"])
 def render():
     data = request.get_json(silent=True)

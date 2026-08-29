@@ -169,6 +169,36 @@
                 <div class="d">Download aller Seiten als Datei</div>
             </div>
         </div>
+
+        <div class="footer-links">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
+        </div>
     </div>
+
+    <div id="cookie-banner" class="cookie-banner">
+        <p>Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.</p>
+        <div class="cookie-actions">
+            <button class="cookie-btn accept" type="button">Akzeptieren</button>
+            <button class="cookie-btn decline" type="button">Nur technisch nötig</button>
+        </div>
+    </div>
+
+    <script>
+        const banner = document.getElementById('cookie-banner');
+        const accepted = localStorage.getItem('inkhelp24_cookie_consent');
+        if (accepted) {
+            banner.classList.add('hidden');
+        }
+        document.querySelector('.cookie-btn.accept')?.addEventListener('click', () => {
+            localStorage.setItem('inkhelp24_cookie_consent', 'accepted');
+            banner.classList.add('hidden');
+        });
+        document.querySelector('.cookie-btn.decline')?.addEventListener('click', () => {
+            localStorage.setItem('inkhelp24_cookie_consent', 'essential-only');
+            banner.classList.add('hidden');
+        });
+    </script>
 </body>
 </html>
