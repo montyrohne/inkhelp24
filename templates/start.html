@@ -187,12 +187,80 @@
         .footer-links a:hover {
             opacity: 0.8;
         }
+        .cookie-banner {
+            position: fixed;
+            left: 50%;
+            bottom: 22px;
+            transform: translateX(-50%);
+            width: min(780px, calc(100vw - 32px));
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.98), rgba(124, 58, 237, 0.96));
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 18px;
+            box-shadow: 0 20px 46px rgba(79, 70, 229, 0.35);
+            padding: 18px 20px 16px;
+            z-index: 30;
+        }
+        .cookie-banner.hidden {
+            display: none;
+        }
+        .cookie-banner-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        .cookie-banner p {
+            margin: 0;
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            line-height: 1.5;
+            flex: 1;
+            text-align: left;
+        }
+        .cookie-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .cookie-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .cookie-btn:hover {
+            transform: translateY(-1px);
+        }
+        .cookie-btn.accept {
+            background: #fff;
+            color: #312e81;
+        }
+        .cookie-btn.decline {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
         @media (max-width: 720px) {
             body { padding-left: 18px; padding-right: 18px; }
             .logo-name { font-size: 36px; }
             .logo-badge { width: 48px; height: 48px; }
             h1 { font-size: 2.6rem; }
             .features { grid-template-columns: repeat(2, 1fr); }
+            .cookie-banner-inner {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .cookie-actions {
+                justify-content: stretch;
+            }
+            .cookie-btn {
+                flex: 1;
+            }
         }
         @media (max-width: 420px) {
             .features { grid-template-columns: 1fr; }
@@ -282,5 +350,31 @@
             </div>
         </div>
     </div>
+
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-banner-inner">
+            <p>Wir verwenden nur technisch notwendige Cookies und einen kurzen Hinweis zur gesetzlichen Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.</p>
+            <div class="cookie-actions">
+                <button class="cookie-btn accept" type="button">Akzeptieren</button>
+                <button class="cookie-btn decline" type="button">Nur technisch nötig</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const banner = document.getElementById('cookie-banner');
+        const chosen = localStorage.getItem('inkhelp24_cookie_consent');
+        if (chosen) {
+            banner.classList.add('hidden');
+        }
+        document.querySelector('.cookie-btn.accept')?.addEventListener('click', () => {
+            localStorage.setItem('inkhelp24_cookie_consent', 'accepted');
+            banner.classList.add('hidden');
+        });
+        document.querySelector('.cookie-btn.decline')?.addEventListener('click', () => {
+            localStorage.setItem('inkhelp24_cookie_consent', 'essential-only');
+            banner.classList.add('hidden');
+        });
+    </script>
 </body>
 </html>
