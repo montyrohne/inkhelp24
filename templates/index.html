@@ -37,32 +37,38 @@
             <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
         </div>
 
-        <section class="feedback-box">
-            <div class="feedback-header">
-                <span class="feedback-badge">💬 Feedback</span>
-                <span class="feedback-tag">{% if lang == 'en' %}Help us improve{% elif lang == 'es' %}Ayúdanos a mejorar{% else %}Hilf uns zu verbessern{% endif %}</span>
+        <section class="feedback-box collapsed" id="feedback-box">
+            <button type="button" class="feedback-toggle" id="feedback-toggle" aria-expanded="false">
+                <span>💬</span> Feedback
+            </button>
+
+            <div class="feedback-panel">
+                <div class="feedback-header">
+                    <span class="feedback-badge">💬 Feedback</span>
+                    <span class="feedback-tag">{% if lang == 'en' %}Help us improve{% elif lang == 'es' %}Ayúdanos a mejorar{% else %}Hilf uns zu verbessern{% endif %}</span>
+                </div>
+
+                <form id="feedback-form" class="feedback-form">
+                    <div class="feedback-grid">
+                        <div class="field">
+                            <label for="feedback-name">{% if lang == 'en' %}Name{% elif lang == 'es' %}Nombre{% else %}Name{% endif %}</label>
+                            <input id="feedback-name" type="text" placeholder="{% if lang == 'en' %}Optional{% elif lang == 'es' %}Opcional{% else %}Optional{% endif %}">
+                        </div>
+                        <div class="field">
+                            <label for="feedback-email">E-Mail</label>
+                            <input id="feedback-email" type="email" placeholder="name@email.de">
+                        </div>
+                    </div>
+
+                    <label for="feedback-message">{% if lang == 'en' %}What is good, what could be better, what is missing?{% elif lang == 'es' %}¿Qué está bien, qué se puede mejorar y qué falta?{% else %}Was ist gut, was kann besser werden und was fehlt?{% endif %}</label>
+                    <textarea id="feedback-message" rows="4" placeholder="{% if lang == 'en' %}Write your suggestion here...{% elif lang == 'es' %}Escribe tu sugerencia aquí...{% else %}Schreibe hier deine Idee oder Rückmeldung...{% endif %}"></textarea>
+
+                    <div class="feedback-actions">
+                        <button type="submit" class="btn primary">{% if lang == 'en' %}Send feedback{% elif lang == 'es' %}Enviar feedback{% else %}Feedback senden{% endif %}</button>
+                    </div>
+                    <p id="feedback-status" class="feedback-status" aria-live="polite"></p>
+                </form>
             </div>
-
-            <form id="feedback-form" class="feedback-form">
-                <div class="feedback-grid">
-                    <div class="field">
-                        <label for="feedback-name">{% if lang == 'en' %}Name{% elif lang == 'es' %}Nombre{% else %}Name{% endif %}</label>
-                        <input id="feedback-name" type="text" placeholder="{% if lang == 'en' %}Optional{% elif lang == 'es' %}Opcional{% else %}Optional{% endif %}">
-                    </div>
-                    <div class="field">
-                        <label for="feedback-email">E-Mail</label>
-                        <input id="feedback-email" type="email" placeholder="name@email.de">
-                    </div>
-                </div>
-
-                <label for="feedback-message">{% if lang == 'en' %}What is good, what could be better, what is missing?{% elif lang == 'es' %}¿Qué está bien, qué se puede mejorar y qué falta?{% else %}Was ist gut, was kann besser werden und was fehlt?{% endif %}</label>
-                <textarea id="feedback-message" rows="4" placeholder="{% if lang == 'en' %}Write your suggestion here...{% elif lang == 'es' %}Escribe tu sugerencia aquí...{% else %}Schreibe hier deine Idee oder Rückmeldung...{% endif %}"></textarea>
-
-                <div class="feedback-actions">
-                    <button type="submit" class="btn primary">{% if lang == 'en' %}Send feedback{% elif lang == 'es' %}Enviar feedback{% else %}Feedback senden{% endif %}</button>
-                </div>
-                <p id="feedback-status" class="feedback-status" aria-live="polite"></p>
-            </form>
         </section>
 
         <h1><span class="logo">✍️</span> {% if lang == 'en' %}Handwriting Generator{% elif lang == 'es' %}Generador de caligrafía{% else %}Text zu Handschrift{% endif %}</h1>
@@ -278,6 +284,15 @@
         const preview = document.getElementById('preview');
         const status = document.getElementById('status');
         const charCount = document.getElementById('char-count');
+
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackToggle = document.getElementById('feedback-toggle');
+
+        feedbackToggle.addEventListener('click', () => {
+            const isCollapsed = feedbackBox.classList.toggle('collapsed');
+            feedbackBox.classList.toggle('expanded', !isCollapsed);
+            feedbackToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        });
 
         document.getElementById('feedback-form').addEventListener('submit', async function (event) {
             event.preventDefault();
