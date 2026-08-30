@@ -83,64 +83,71 @@
                     <button id="btn-example" type="button" class="btn subtle">{% if lang == 'en' %}Example text{% elif lang == 'es' %}Texto de ejemplo{% else %}Beispieltext{% endif %}</button>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Basics{% elif lang == 'es' %}Fundamentos{% else %}Grundlagen{% endif %}</div>
-                <div class="row">
-                    <div class="field">
-                        <label for="font">{% if lang == 'en' %}Handwriting{% elif lang == 'es' %}Escritura{% else %}Handschrift{% endif %}</label>
-                        <select id="font">
-                            {% for f in fonts %}
-                            <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
-                            {% endfor %}
-                        </select>
+                <div class="settings-group">
+                    <div class="section-title">{% if lang == 'en' %}Basics{% elif lang == 'es' %}Fundamentos{% else %}Grundlagen{% endif %}</div>
+                    <div class="row">
+                        <div class="field">
+                            <label for="font">{% if lang == 'en' %}Handwriting{% elif lang == 'es' %}Escritura{% else %}Handschrift{% endif %}</label>
+                            <select id="font">
+                                {% for f in fonts %}
+                                <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="paper">{% if lang == 'en' %}Paper size{% elif lang == 'es' %}Formato del papel{% else %}Papierformat{% endif %}</label>
+                            <select id="paper">
+                                <option value="A4" selected>A4</option>
+                                <option value="LETTER">Letter</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="paper">{% if lang == 'en' %}Paper size{% elif lang == 'es' %}Formato del papel{% else %}Papierformat{% endif %}</label>
-                        <select id="paper">
-                            <option value="A4" selected>A4</option>
-                            <option value="LETTER">Letter</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="field">
-                        <label for="font_size">{% if lang == 'en' %}Font size{% elif lang == 'es' %}Tamaño de fuente{% else %}Schriftgröße{% endif %}</label>
-                        <input type="number" id="font_size" value="42" min="20" max="80" step="1">
-                    </div>
-                    <div class="field">
-                        <label for="wortabstand">{% if lang == 'en' %}Word spacing{% elif lang == 'es' %}Espaciado entre palabras{% else %}Wortabstand{% endif %}</label>
-                        <input type="number" id="wortabstand" value="50" min="0" max="100" step="5">
+                    <div class="row">
+                        <div class="field">
+                            <label for="font_size">{% if lang == 'en' %}Font size{% elif lang == 'es' %}Tamaño de fuente{% else %}Schriftgröße{% endif %}</label>
+                            <input type="number" id="font_size" value="42" min="20" max="80" step="1">
+                        </div>
+                        <div class="field">
+                            <label for="wortabstand">{% if lang == 'en' %}Word spacing{% elif lang == 'es' %}Espaciado entre palabras{% else %}Wortabstand{% endif %}</label>
+                            <input type="number" id="wortabstand" value="50" min="0" max="100" step="5">
+                        </div>
                     </div>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Natural look{% elif lang == 'es' %}Aspecto natural{% else %}Natürlichkeit{% endif %}</div>
-                <div class="slider">
-                    <label for="neigung">{% if lang == 'en' %}Slant{% elif lang == 'es' %}Inclinación{% else %}Schräglage{% endif %}</label>
-                    <input type="range" id="neigung" min="-50" max="50" value="0">
-                    <span class="val" data-for="neigung">0°</span>
+                <div class="settings-group">
+                    <div class="section-title">{% if lang == 'en' %}Natural look{% elif lang == 'es' %}Aspecto natural{% else %}Natürlichkeit{% endif %}</div>
+                    <div class="slider">
+                        <label for="neigung">{% if lang == 'en' %}Slant{% elif lang == 'es' %}Inclinación{% else %}Schräglage{% endif %}</label>
+                        <input type="range" id="neigung" min="-50" max="50" value="0">
+                        <span class="val" data-for="neigung">0°</span>
+                    </div>
                 </div>
 
-                <div class="section-title-wrap">
-                    <div class="section-title">{% if lang == 'en' %}Details{% elif lang == 'es' %}Detalles{% else %}Details{% endif %}</div>
-                    <span class="section-note">{% if lang == 'en' %}(use with caution){% elif lang == 'es' %}(con precaución){% else %}(mit Vorsicht zu genießen){% endif %}</span>
-                </div>
-                <div class="slider details-slider">
-                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% elif lang == 'es' %}Líneas tachadas{% else %}Durchstreichungen{% endif %}</label>
-                    <input type="range" id="durchstreichung" min="0" max="100" value="0">
-                    <span class="val" data-for="durchstreichung">0%</span>
-                </div>
-                <div class="slider details-slider">
-                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% elif lang == 'es' %}Letras faltantes{% else %}Fehlende Buchstaben{% endif %}</label>
-                    <input type="range" id="fehlende" min="0" max="100" value="0">
-                    <span class="val" data-for="fehlende">0%</span>
-                </div>
-                <div class="slider details-slider">
-                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% elif lang == 'es' %}Errores ortográficos{% else %}Rechtschreibfehler{% endif %}</label>
-                    <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
-                    <span class="val" data-for="rechtschreibfehler">0%</span>
+                <div class="settings-group">
+                    <div class="section-title-wrap">
+                        <div class="section-title">{% if lang == 'en' %}Details{% elif lang == 'es' %}Detalles{% else %}Details{% endif %}</div>
+                        <span class="section-note">{% if lang == 'en' %}(use with caution){% elif lang == 'es' %}(con precaución){% else %}(mit Vorsicht zu genießen){% endif %}</span>
+                    </div>
+                    <div class="slider details-slider">
+                        <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% elif lang == 'es' %}Líneas tachadas{% else %}Durchstreichungen{% endif %}</label>
+                        <input type="range" id="durchstreichung" min="0" max="100" value="0">
+                        <span class="val" data-for="durchstreichung">0%</span>
+                    </div>
+                    <div class="slider details-slider">
+                        <label for="fehlende">{% if lang == 'en' %}Missing letters{% elif lang == 'es' %}Letras faltantes{% else %}Fehlende Buchstaben{% endif %}</label>
+                        <input type="range" id="fehlende" min="0" max="100" value="0">
+                        <span class="val" data-for="fehlende">0%</span>
+                    </div>
+                    <div class="slider details-slider">
+                        <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% elif lang == 'es' %}Errores ortográficos{% else %}Rechtschreibfehler{% endif %}</label>
+                        <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
+                        <span class="val" data-for="rechtschreibfehler">0%</span>
+                    </div>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Paper style{% elif lang == 'es' %}Estilo de papel{% else %}Papier-Stil{% endif %}</div>
-                <div class="row">
+                <div class="settings-group">
+                    <div class="section-title">{% if lang == 'en' %}Paper style{% elif lang == 'es' %}Estilo de papel{% else %}Papier-Stil{% endif %}</div>
+                    <div class="row">
                     <div class="field">
                         <label for="papier_style">{% if lang == 'en' %}Style{% elif lang == 'es' %}Estilo{% else %}Art{% endif %}</label>
                         <select id="papier_style">
