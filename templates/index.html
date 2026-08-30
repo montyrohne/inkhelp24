@@ -34,24 +34,25 @@
         <div class="lang-switcher">
             <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
             <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
         </div>
 
-        <h1><span class="logo">✍️</span> {% if lang == 'en' %}Handwriting Generator{% else %}Text zu Handschrift{% endif %}</h1>
-        <p class="subtitle">{% if lang == 'en' %}Turn your text into a natural-looking handwritten note.{% else %}Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.{% endif %}</p>
+        <h1><span class="logo">✍️</span> {% if lang == 'en' %}Handwriting Generator{% elif lang == 'es' %}Generador de caligrafía{% else %}Text zu Handschrift{% endif %}</h1>
+        <p class="subtitle">{% if lang == 'en' %}Turn your text into a natural-looking handwritten note.{% elif lang == 'es' %}Convierte tu texto en una nota manuscrita natural y auténtica.{% else %}Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.{% endif %}</p>
 
         <div class="layout">
             <div class="panel">
-                <label for="text">{% if lang == 'en' %}Your text{% else %}Dein Text{% endif %}</label>
-                <textarea id="text" rows="8" placeholder="{% if lang == 'en' %}Write your text here...{% else %}Schreibe hier deinen Text hinein...{% endif %}"></textarea>
+                <label for="text">{% if lang == 'en' %}Your text{% elif lang == 'es' %}Tu texto{% else %}Dein Text{% endif %}</label>
+                <textarea id="text" rows="8" placeholder="{% if lang == 'en' %}Write your text here...{% elif lang == 'es' %}Escribe tu texto aquí...{% else %}Schreibe hier deinen Text hinein...{% endif %}"></textarea>
                 <div class="text-meta">
                     <span id="char-count">0 Zeichen · geschätzt 1 Seite</span>
-                    <button id="btn-example" type="button" class="btn subtle">{% if lang == 'en' %}Example text{% else %}Beispieltext{% endif %}</button>
+                    <button id="btn-example" type="button" class="btn subtle">{% if lang == 'en' %}Example text{% elif lang == 'es' %}Texto de ejemplo{% else %}Beispieltext{% endif %}</button>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Basics{% else %}Grundlagen{% endif %}</div>
+                <div class="section-title">{% if lang == 'en' %}Basics{% elif lang == 'es' %}Fundamentos{% else %}Grundlagen{% endif %}</div>
                 <div class="row">
                     <div class="field">
-                        <label for="font">{% if lang == 'en' %}Handwriting{% else %}Handschrift{% endif %}</label>
+                        <label for="font">{% if lang == 'en' %}Handwriting{% elif lang == 'es' %}Escritura{% else %}Handschrift{% endif %}</label>
                         <select id="font">
                             {% for f in fonts %}
                             <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
@@ -59,7 +60,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label for="paper">{% if lang == 'en' %}Paper size{% else %}Papierformat{% endif %}</label>
+                        <label for="paper">{% if lang == 'en' %}Paper size{% elif lang == 'es' %}Formato del papel{% else %}Papierformat{% endif %}</label>
                         <select id="paper">
                             <option value="A4" selected>A4</option>
                             <option value="LETTER">Letter</option>
@@ -68,101 +69,101 @@
                 </div>
                 <div class="row">
                     <div class="field">
-                        <label for="font_size">{% if lang == 'en' %}Font size{% else %}Schriftgröße{% endif %}</label>
+                        <label for="font_size">{% if lang == 'en' %}Font size{% elif lang == 'es' %}Tamaño de fuente{% else %}Schriftgröße{% endif %}</label>
                         <input type="number" id="font_size" value="42" min="20" max="80" step="1">
                     </div>
                     <div class="field">
-                        <label for="wortabstand">{% if lang == 'en' %}Word spacing{% else %}Wortabstand{% endif %}</label>
+                        <label for="wortabstand">{% if lang == 'en' %}Word spacing{% elif lang == 'es' %}Espaciado entre palabras{% else %}Wortabstand{% endif %}</label>
                         <input type="number" id="wortabstand" value="50" min="0" max="100" step="5">
                     </div>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Natural look{% else %}Natürlichkeit{% endif %}</div>
+                <div class="section-title">{% if lang == 'en' %}Natural look{% elif lang == 'es' %}Aspecto natural{% else %}Natürlichkeit{% endif %}</div>
                 <div class="slider">
-                    <label for="neigung">{% if lang == 'en' %}Slant{% else %}Schräglage{% endif %}</label>
+                    <label for="neigung">{% if lang == 'en' %}Slant{% elif lang == 'es' %}Inclinación{% else %}Schräglage{% endif %}</label>
                     <input type="range" id="neigung" min="-50" max="50" value="0">
                     <span class="val" data-for="neigung">0°</span>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Details{% else %}Details{% endif %}</div>
+                <div class="section-title">{% if lang == 'en' %}Details{% elif lang == 'es' %}Detalles{% else %}Details{% endif %}</div>
                 <div class="slider">
-                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% else %}Durchstreichungen{% endif %}</label>
+                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% elif lang == 'es' %}Líneas tachadas{% else %}Durchstreichungen{% endif %}</label>
                     <input type="range" id="durchstreichung" min="0" max="100" value="0">
                     <span class="val" data-for="durchstreichung">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% else %}Fehlende Buchstaben{% endif %}</label>
+                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% elif lang == 'es' %}Letras faltantes{% else %}Fehlende Buchstaben{% endif %}</label>
                     <input type="range" id="fehlende" min="0" max="100" value="0">
                     <span class="val" data-for="fehlende">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% else %}Rechtschreibfehler{% endif %}</label>
+                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% elif lang == 'es' %}Errores ortográficos{% else %}Rechtschreibfehler{% endif %}</label>
                     <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
                     <span class="val" data-for="rechtschreibfehler">0%</span>
                 </div>
 
-                <div class="section-title">{% if lang == 'en' %}Paper style{% else %}Papier-Stil{% endif %}</div>
+                <div class="section-title">{% if lang == 'en' %}Paper style{% elif lang == 'es' %}Estilo de papel{% else %}Papier-Stil{% endif %}</div>
                 <div class="row">
                     <div class="field">
-                        <label for="papier_style">{% if lang == 'en' %}Style{% else %}Art{% endif %}</label>
+                        <label for="papier_style">{% if lang == 'en' %}Style{% elif lang == 'es' %}Estilo{% else %}Art{% endif %}</label>
                         <select id="papier_style">
-                            <option value="weiss" selected>{% if lang == 'en' %}White{% else %}Weiß{% endif %}</option>
-                            <option value="liniert">{% if lang == 'en' %}Ruled{% else %}Liniert{% endif %}</option>
-                            <option value="kariert">{% if lang == 'en' %}Grid{% else %}Kariert{% endif %}</option>
-                            <option value="punkte">{% if lang == 'en' %}Dot grid{% else %}Punktraster{% endif %}</option>
-                            <option value="alt">{% if lang == 'en' %}Vintage{% else %}Alt/vergilbt{% endif %}</option>
+                            <option value="weiss" selected>{% if lang == 'en' %}White{% elif lang == 'es' %}Blanco{% else %}Weiß{% endif %}</option>
+                            <option value="liniert">{% if lang == 'en' %}Ruled{% elif lang == 'es' %}Rayado{% else %}Liniert{% endif %}</option>
+                            <option value="kariert">{% if lang == 'en' %}Grid{% elif lang == 'es' %}Cuadriculado{% else %}Kariert{% endif %}</option>
+                            <option value="punkte">{% if lang == 'en' %}Dot grid{% elif lang == 'es' %}Punteado{% else %}Punktraster{% endif %}</option>
+                            <option value="alt">{% if lang == 'en' %}Vintage{% elif lang == 'es' %}Vintage{% else %}Alt/vergilbt{% endif %}</option>
                         </select>
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="randlinien"> {% if lang == 'en' %}Margin lines{% else %}Randlinien{% endif %}</label>
+                        <label><input type="checkbox" id="randlinien"> {% if lang == 'en' %}Margin lines{% elif lang == 'es' %}Líneas de margen{% else %}Randlinien{% endif %}</label>
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="datum" checked> {% if lang == 'en' %}Date{% else %}Datum{% endif %}</label>
+                        <label><input type="checkbox" id="datum" checked> {% if lang == 'en' %}Date{% elif lang == 'es' %}Fecha{% else %}Datum{% endif %}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="field">
-                        <label for="rand_links_cm">{% if lang == 'en' %}Left margin (cm){% else %}Linker Abstand (cm){% endif %}</label>
+                        <label for="rand_links_cm">{% if lang == 'en' %}Left margin (cm){% elif lang == 'es' %}Margen izquierdo (cm){% else %}Linker Abstand (cm){% endif %}</label>
                         <input type="number" id="rand_links_cm" value="2.5" min="0" max="5" step="0.1">
                     </div>
                     <div class="field">
-                        <label for="rand_rechts_cm">{% if lang == 'en' %}Right margin (cm){% else %}Rechter Abstand (cm){% endif %}</label>
+                        <label for="rand_rechts_cm">{% if lang == 'en' %}Right margin (cm){% elif lang == 'es' %}Margen derecho (cm){% else %}Rechter Abstand (cm){% endif %}</label>
                         <input type="number" id="rand_rechts_cm" value="2.5" min="0" max="5" step="0.1">
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="kariert_jede_zweite"> {% if lang == 'en' %}Every 2nd line (grid){% else %}Jede 2. Zeile (kariert){% endif %}</label>
+                        <label><input type="checkbox" id="kariert_jede_zweite"> {% if lang == 'en' %}Every 2nd line (grid){% elif lang == 'es' %}Cada 2ª línea (cuadrícula){% else %}Jede 2. Zeile (kariert){% endif %}</label>
                     </div>
                 </div>
 
                 <div class="actions">
-                    <button id="btn-render" class="btn primary">{% if lang == 'en' %}Preview{% else %}Vorschau{% endif %}</button>
-                    <button id="btn-png" class="btn">{% if lang == 'en' %}Download PNG (ZIP){% else %}Als PNG (ZIP){% endif %}</button>
-                    <button id="btn-pdf" class="btn">{% if lang == 'en' %}Download PDF{% else %}Als PDF laden{% endif %}</button>
+                    <button id="btn-render" class="btn primary">{% if lang == 'en' %}Preview{% elif lang == 'es' %}Vista previa{% else %}Vorschau{% endif %}</button>
+                    <button id="btn-png" class="btn">{% if lang == 'en' %}Download PNG (ZIP){% elif lang == 'es' %}Descargar PNG (ZIP){% else %}Als PNG (ZIP){% endif %}</button>
+                    <button id="btn-pdf" class="btn">{% if lang == 'en' %}Download PDF{% elif lang == 'es' %}Descargar PDF{% else %}Als PDF laden{% endif %}</button>
                 </div>
 
                 <p id="status" class="status"><span id="spinner" class="spinner" style="display:none"></span></p>
 
                 <div class="footer-links">
-                    <a href="/impressum">{% if lang == 'en' %}Imprint{% else %}Impressum{% endif %}</a>
-                    <a href="/datenschutz">{% if lang == 'en' %}Privacy Policy{% else %}Datenschutz{% endif %}</a>
-                    <a href="/nutzungsbedingungen">{% if lang == 'en' %}Terms{% else %}Nutzungsbedingungen{% endif %}</a>
+                    <a href="/impressum">{% if lang == 'en' %}Imprint{% elif lang == 'es' %}Aviso legal{% else %}Impressum{% endif %}</a>
+                    <a href="/datenschutz">{% if lang == 'en' %}Privacy Policy{% elif lang == 'es' %}Política de privacidad{% else %}Datenschutz{% endif %}</a>
+                    <a href="/nutzungsbedingungen">{% if lang == 'en' %}Terms{% elif lang == 'es' %}Términos{% else %}Nutzungsbedingungen{% endif %}</a>
                 </div>
             </div>
 
             <div class="panel preview-panel">
-                <h2>{% if lang == 'en' %}Preview{% else %}Vorschau{% endif %}</h2>
+                <h2>{% if lang == 'en' %}Preview{% elif lang == 'es' %}Vista previa{% else %}Vorschau{% endif %}</h2>
                 <div id="preview" class="preview">
-                    <p class="placeholder">{% if lang == 'en' %}Enter text and click Preview.{% else %}Text eingeben und auf „Vorschau" klicken.{% endif %}</p>
+                    <p class="placeholder">{% if lang == 'en' %}Enter text and click Preview.{% elif lang == 'es' %}Escribe el texto y pulsa Vista previa.{% else %}Text eingeben und auf „Vorschau" klicken.{% endif %}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="cookie-banner" class="cookie-banner">
-        <p>{% if lang == 'en' %}We only use technically necessary cookies and a small cookie notice for the legally required transparency. By choosing, you confirm the current notice.{% else %}Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.{% endif %}</p>
+        <p>{% if lang == 'en' %}We only use technically necessary cookies and a small cookie notice for the legally required transparency. By choosing, you confirm the current notice.{% elif lang == 'es' %}Solo utilizamos cookies técnicamente necesarias y un aviso breve para la transparencia requerida por ley. Con su elección, confirma el aviso actual.{% else %}Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.{% endif %}</p>
         <div class="cookie-actions">
-            <button class="cookie-btn accept" type="button">{% if lang == 'en' %}Accept{% else %}Akzeptieren{% endif %}</button>
-            <button class="cookie-btn decline" type="button">{% if lang == 'en' %}Only technically necessary{% else %}Nur technisch nötig{% endif %}</button>
+            <button class="cookie-btn accept" type="button">{% if lang == 'en' %}Accept{% elif lang == 'es' %}Aceptar{% else %}Akzeptieren{% endif %}</button>
+            <button class="cookie-btn decline" type="button">{% if lang == 'en' %}Only technically necessary{% elif lang == 'es' %}Solo lo técnico{% else %}Nur technisch nötig{% endif %}</button>
         </div>
     </div>
 

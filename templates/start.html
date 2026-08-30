@@ -272,6 +272,7 @@
         <div class="lang-switcher">
             <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
             <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
         </div>
 
         <div class="logo">
@@ -309,6 +310,36 @@
                 <div class="d">Download all pages as files</div>
             </div>
         </div>
+        {% elif lang == 'es' %}
+        <h1>Convierte tu texto en<br>escritura <span class="grad">auténtica</span></h1>
+        <p class="sub">
+            Bienvenido a <strong>inkhelp24</strong>! Escribe tu texto y conviértelo en una nota manuscrita muy natural
+            como imagen o PDF, con tu propio estilo de papel y tu letra personal.
+        </p>
+        <a class="cta" href="/builder">Empezar&nbsp;→</a>
+
+        <div class="features">
+            <div class="feature">
+                <div class="ico">✍️</div>
+                <div class="t">Escritura auténtica</div>
+                <div class="d">5 fuentes naturales con personalidad y flujo</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📄</div>
+                <div class="t">Elige papel</div>
+                <div class="d">Rayado, cuadriculado, punteado o vintage</div>
+            </div>
+            <div class="feature">
+                <div class="ico">🎨</div>
+                <div class="t">Detalles personalizados</div>
+                <div class="d">Inclinación, márgenes, fecha y más</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📥</div>
+                <div class="t">PDF &amp; PNG</div>
+                <div class="d">Descarga todas las páginas como archivos</div>
+            </div>
+        </div>
         {% else %}
         <h1>Verwandle deinen Text in<br>echte <span class="grad">Handschrift</span></h1>
         <p class="sub">
@@ -344,19 +375,19 @@
 
         <div class="site-footer">
             <div class="footer-links">
-                <a href="/impressum">{% if lang == 'en' %}Imprint{% else %}Impressum{% endif %}</a>
-                <a href="/datenschutz">{% if lang == 'en' %}Privacy Policy{% else %}Datenschutz{% endif %}</a>
-                <a href="/nutzungsbedingungen">{% if lang == 'en' %}Terms{% else %}Nutzungsbedingungen{% endif %}</a>
+                <a href="/impressum">{% if lang == 'en' %}Imprint{% elif lang == 'es' %}Aviso legal{% else %}Impressum{% endif %}</a>
+                <a href="/datenschutz">{% if lang == 'en' %}Privacy Policy{% elif lang == 'es' %}Política de privacidad{% else %}Datenschutz{% endif %}</a>
+                <a href="/nutzungsbedingungen">{% if lang == 'en' %}Terms{% elif lang == 'es' %}Términos{% else %}Nutzungsbedingungen{% endif %}</a>
             </div>
         </div>
     </div>
 
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-banner-inner">
-            <p>{% if lang == 'en' %}We only use technically necessary cookies and a short notice for the legally required transparency. With your choice, you confirm the current notice.{% else %}Wir verwenden nur technisch notwendige Cookies und einen kurzen Hinweis zur gesetzlichen Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.{% endif %}</p>
+            <p>{% if lang == 'en' %}We only use technically necessary cookies and a short notice for the legally required transparency. With your choice, you confirm the current notice.{% elif lang == 'es' %}Solo utilizamos cookies técnicamente necesarias y un aviso breve para la transparencia requerida por ley. Con su elección, confirma el aviso actual.{% else %}Wir verwenden nur technisch notwendige Cookies und einen kurzen Hinweis zur gesetzlichen Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.{% endif %}</p>
             <div class="cookie-actions">
-                <button class="cookie-btn accept" type="button">{% if lang == 'en' %}Accept{% else %}Akzeptieren{% endif %}</button>
-                <button class="cookie-btn decline" type="button">{% if lang == 'en' %}Only technically necessary{% else %}Nur technisch nötig{% endif %}</button>
+                <button class="cookie-btn accept" type="button">{% if lang == 'en' %}Accept{% elif lang == 'es' %}Aceptar{% else %}Akzeptieren{% endif %}</button>
+                <button class="cookie-btn decline" type="button">{% if lang == 'en' %}Only technically necessary{% elif lang == 'es' %}Solo lo técnico{% else %}Nur technisch nötig{% endif %}</button>
             </div>
         </div>
     </div>
