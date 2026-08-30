@@ -1,31 +1,57 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text zu Handschrift</title>
+    <title>{% if lang == 'en' %}Handwriting Generator{% else %}Text zu Handschrift{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .lang-switcher {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .lang-switcher a {
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid #dfe3ef;
+            background: rgba(255,255,255,0.7);
+            color: #475569;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .lang-switcher a.active {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-color: transparent;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1><span class="logo">✍️</span> Text zu Handschrift</h1>
-        <p class="subtitle">Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.</p>
+        <div class="lang-switcher">
+            <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
+            <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+        </div>
+
+        <h1><span class="logo">✍️</span> {% if lang == 'en' %}Handwriting Generator{% else %}Text zu Handschrift{% endif %}</h1>
+        <p class="subtitle">{% if lang == 'en' %}Turn your text into a natural-looking handwritten note.{% else %}Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.{% endif %}</p>
 
         <div class="layout">
             <div class="panel">
-                <label for="text">Dein Text</label>
-                <textarea id="text" rows="8"
-                    placeholder="Schreibe hier deinen Text hinein..."></textarea>
+                <label for="text">{% if lang == 'en' %}Your text{% else %}Dein Text{% endif %}</label>
+                <textarea id="text" rows="8" placeholder="{% if lang == 'en' %}Write your text here...{% else %}Schreibe hier deinen Text hinein...{% endif %}"></textarea>
                 <div class="text-meta">
                     <span id="char-count">0 Zeichen · geschätzt 1 Seite</span>
-                    <button id="btn-example" type="button" class="btn subtle">Beispieltext</button>
+                    <button id="btn-example" type="button" class="btn subtle">{% if lang == 'en' %}Example text{% else %}Beispieltext{% endif %}</button>
                 </div>
 
-                <!-- Basis & Font -->
-                <div class="section-title">Grundlagen</div>
+                <div class="section-title">{% if lang == 'en' %}Basics{% else %}Grundlagen{% endif %}</div>
                 <div class="row">
                     <div class="field">
-                        <label for="font">Handschrift</label>
+                        <label for="font">{% if lang == 'en' %}Handwriting{% else %}Handschrift{% endif %}</label>
                         <select id="font">
                             {% for f in fonts %}
                             <option value="{{ f }}" {% if loop.first %}selected{% endif %}>{{ f }}</option>
@@ -33,7 +59,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label for="paper">Papierformat</label>
+                        <label for="paper">{% if lang == 'en' %}Paper size{% else %}Papierformat{% endif %}</label>
                         <select id="paper">
                             <option value="A4" selected>A4</option>
                             <option value="LETTER">Letter</option>
@@ -42,79 +68,76 @@
                 </div>
                 <div class="row">
                     <div class="field">
-                        <label for="font_size">Schriftgröße</label>
+                        <label for="font_size">{% if lang == 'en' %}Font size{% else %}Schriftgröße{% endif %}</label>
                         <input type="number" id="font_size" value="42" min="20" max="80" step="1">
                     </div>
                     <div class="field">
-                        <label for="wortabstand">Wortabstand</label>
+                        <label for="wortabstand">{% if lang == 'en' %}Word spacing{% else %}Wortabstand{% endif %}</label>
                         <input type="number" id="wortabstand" value="50" min="0" max="100" step="5">
                     </div>
                 </div>
 
-                <!-- Natürlichkeit -->
-                <div class="section-title">Natürlichkeit</div>
+                <div class="section-title">{% if lang == 'en' %}Natural look{% else %}Natürlichkeit{% endif %}</div>
                 <div class="slider">
-                    <label for="neigung">Schräglage</label>
+                    <label for="neigung">{% if lang == 'en' %}Slant{% else %}Schräglage{% endif %}</label>
                     <input type="range" id="neigung" min="-50" max="50" value="0">
                     <span class="val" data-for="neigung">0°</span>
                 </div>
 
-                <!-- Details -->
-                <div class="section-title">Details</div>
+                <div class="section-title">{% if lang == 'en' %}Details{% else %}Details{% endif %}</div>
                 <div class="slider">
-                    <label for="durchstreichung">Durchstreichungen</label>
+                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% else %}Durchstreichungen{% endif %}</label>
                     <input type="range" id="durchstreichung" min="0" max="100" value="0">
                     <span class="val" data-for="durchstreichung">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="fehlende">Fehlende Buchstaben</label>
+                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% else %}Fehlende Buchstaben{% endif %}</label>
                     <input type="range" id="fehlende" min="0" max="100" value="0">
                     <span class="val" data-for="fehlende">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="rechtschreibfehler">Rechtschreibfehler</label>
+                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% else %}Rechtschreibfehler{% endif %}</label>
                     <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
                     <span class="val" data-for="rechtschreibfehler">0%</span>
                 </div>
 
-                <!-- Papier-Stil -->
-                <div class="section-title">Papier-Stil</div>
+                <div class="section-title">{% if lang == 'en' %}Paper style{% else %}Papier-Stil{% endif %}</div>
                 <div class="row">
                     <div class="field">
-                        <label for="papier_style">Art</label>
+                        <label for="papier_style">{% if lang == 'en' %}Style{% else %}Art{% endif %}</label>
                         <select id="papier_style">
-                            <option value="weiss" selected>Weiß</option>
-                            <option value="liniert">Liniert</option>
-                            <option value="kariert">Kariert</option>
-                            <option value="punkte">Punktraster</option>
-                            <option value="alt">Alt/vergilbt</option>
+                            <option value="weiss" selected>{% if lang == 'en' %}White{% else %}Weiß{% endif %}</option>
+                            <option value="liniert">{% if lang == 'en' %}Ruled{% else %}Liniert{% endif %}</option>
+                            <option value="kariert">{% if lang == 'en' %}Grid{% else %}Kariert{% endif %}</option>
+                            <option value="punkte">{% if lang == 'en' %}Dot grid{% else %}Punktraster{% endif %}</option>
+                            <option value="alt">{% if lang == 'en' %}Vintage{% else %}Alt/vergilbt{% endif %}</option>
                         </select>
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="randlinien"> Randlinien</label>
+                        <label><input type="checkbox" id="randlinien"> {% if lang == 'en' %}Margin lines{% else %}Randlinien{% endif %}</label>
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="datum" checked> Datum</label>
+                        <label><input type="checkbox" id="datum" checked> {% if lang == 'en' %}Date{% else %}Datum{% endif %}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="field">
-                        <label for="rand_links_cm">Linker Abstand (cm)</label>
+                        <label for="rand_links_cm">{% if lang == 'en' %}Left margin (cm){% else %}Linker Abstand (cm){% endif %}</label>
                         <input type="number" id="rand_links_cm" value="2.5" min="0" max="5" step="0.1">
                     </div>
                     <div class="field">
-                        <label for="rand_rechts_cm">Rechter Abstand (cm)</label>
+                        <label for="rand_rechts_cm">{% if lang == 'en' %}Right margin (cm){% else %}Rechter Abstand (cm){% endif %}</label>
                         <input type="number" id="rand_rechts_cm" value="2.5" min="0" max="5" step="0.1">
                     </div>
                     <div class="field check-field">
-                        <label><input type="checkbox" id="kariert_jede_zweite"> Jede 2. Zeile (kariert)</label>
+                        <label><input type="checkbox" id="kariert_jede_zweite"> {% if lang == 'en' %}Every 2nd line (grid){% else %}Jede 2. Zeile (kariert){% endif %}</label>
                     </div>
                 </div>
 
                 <div class="actions">
-                    <button id="btn-render" class="btn primary">Vorschau</button>
-                    <button id="btn-png" class="btn">Als PNG (ZIP)</button>
-                    <button id="btn-pdf" class="btn">Als PDF laden</button>
+                    <button id="btn-render" class="btn primary">{% if lang == 'en' %}Preview{% else %}Vorschau{% endif %}</button>
+                    <button id="btn-png" class="btn">{% if lang == 'en' %}Download PNG (ZIP){% else %}Als PNG (ZIP){% endif %}</button>
+                    <button id="btn-pdf" class="btn">{% if lang == 'en' %}Download PDF{% else %}Als PDF laden{% endif %}</button>
                 </div>
 
                 <p id="status" class="status"><span id="spinner" class="spinner" style="display:none"></span></p>
@@ -127,23 +150,53 @@
             </div>
 
             <div class="panel preview-panel">
-                <h2>Vorschau</h2>
+                <h2>{% if lang == 'en' %}Preview{% else %}Vorschau{% endif %}</h2>
                 <div id="preview" class="preview">
-                    <p class="placeholder">Text eingeben und auf „Vorschau" klicken.</p>
+                    <p class="placeholder">{% if lang == 'en' %}Enter text and click Preview.{% else %}Text eingeben und auf „Vorschau" klicken.{% endif %}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="cookie-banner" class="cookie-banner">
-        <p>Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.</p>
+        <p>{% if lang == 'en' %}We only use technically necessary cookies and a small cookie notice for the legally required transparency. By choosing, you confirm the current notice.{% else %}Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.{% endif %}</p>
         <div class="cookie-actions">
-            <button class="cookie-btn accept" type="button">Akzeptieren</button>
-            <button class="cookie-btn decline" type="button">Nur technisch nötig</button>
+            <button class="cookie-btn accept" type="button">{% if lang == 'en' %}Accept{% else %}Akzeptieren{% endif %}</button>
+            <button class="cookie-btn decline" type="button">{% if lang == 'en' %}Only technically necessary{% else %}Nur technisch nötig{% endif %}</button>
         </div>
     </div>
 
     <script>
+        const LANG = {{ lang|tojson }};
+        const T = {
+            de: {
+                running: 'Läuft...',
+                previewCreated: 'Vorschau erstellt',
+                pages: 'Seite',
+                png: 'PNG-Dateien heruntergeladen (ZIP).',
+                pdf: 'PDF heruntergeladen.',
+                chars: 'Zeichen',
+                estimated: 'geschätzt',
+                page: 'Seite',
+                example: 'Beispieltext',
+                placeholder: 'Text eingeben und auf „Vorschau" klicken.',
+                statusError: 'Fehler',
+            },
+            en: {
+                running: 'Running...',
+                previewCreated: 'Preview created',
+                pages: 'page',
+                png: 'PNG files downloaded (ZIP).',
+                pdf: 'PDF downloaded.',
+                chars: 'characters',
+                estimated: 'estimated',
+                page: 'page',
+                example: 'Example text',
+                placeholder: 'Enter text and click Preview.',
+                statusError: 'Error',
+            }
+        };
+
         const SLIDERS = ['neigung','durchstreichung','fehlende','rechtschreibfehler'];
         function fmtVal(id, v) {
             if (id === 'neigung') return v >= 0 ? '+' + v + '°' : v + '°';
@@ -172,7 +225,7 @@
             };
             SLIDERS.forEach(id => {
                 if (id === 'neigung') {
-                    body[id] = parseInt(document.getElementById(id).value) / 50; // -1..+1
+                    body[id] = parseInt(document.getElementById(id).value) / 50;
                 } else {
                     body[id] = parseInt(document.getElementById(id).value) / 100;
                 }
@@ -198,7 +251,7 @@
             pages.forEach((b64, i) => {
                 const img = document.createElement('img');
                 img.src = 'data:image/png;base64,' + b64;
-                img.alt = 'Seite ' + (i + 1);
+                img.alt = (LANG === 'en' ? 'Page ' : 'Seite ') + (i + 1);
                 img.classList.add('page-img');
                 preview.appendChild(img);
             });
@@ -206,7 +259,7 @@
         }
 
         async function post(path) {
-            status.textContent = 'Läuft...';
+            status.textContent = T[LANG].running;
             setBusy(true);
             try {
                 const res = await fetch(path, {
@@ -217,12 +270,13 @@
                 const contentType = res.headers.get('Content-Type') || '';
                 if (!res.ok) {
                     const body = await res.json().catch(() => ({}));
-                    throw new Error(body.error || 'Fehler (' + res.status + ')');
+                    throw new Error(body.error || T[LANG].statusError + ' (' + res.status + ')');
                 }
                 if (contentType.includes('application/json')) {
                     const data = await res.json();
                     const n = pagesFromResult(data.pages || []);
-                    status.textContent = 'Vorschau erstellt (' + n + ' Seite' + (n === 1 ? '' : 'n') + ').';
+                    const label = T[LANG].pages;
+                    status.textContent = T[LANG].previewCreated + ' (' + n + ' ' + label + (n === 1 ? '' : 'n') + ').';
                 } else if (contentType.includes('application/zip')) {
                     const blob = await res.blob();
                     const a = document.createElement('a');
@@ -231,7 +285,7 @@
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
-                    status.textContent = 'PNG-Dateien heruntergeladen (ZIP).';
+                    status.textContent = T[LANG].png;
                 } else if (contentType.includes('application/pdf')) {
                     const blob = await res.blob();
                     const a = document.createElement('a');
@@ -240,7 +294,7 @@
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
-                    status.textContent = 'PDF heruntergeladen.';
+                    status.textContent = T[LANG].pdf;
                 }
             } catch (err) {
                 status.textContent = err.message;
@@ -252,14 +306,13 @@
         function updateCharCount() {
             const text = document.getElementById('text').value;
             const chars = text.length;
-            // grobe Schätzung: ~300 Zeichen pro Seite
             const pages = Math.max(1, Math.ceil(chars / 300));
-            charCount.textContent = chars + ' Zeichen · geschätzt ' + pages + ' Seite' + (pages === 1 ? '' : 'n');
+            const pageLabel = pages === 1 ? (LANG === 'en' ? 'page' : 'Seite') : (LANG === 'en' ? 'pages' : 'Seiten');
+            charCount.textContent = chars + ' ' + (LANG === 'en' ? 'characters' : 'Zeichen') + ' · ' + (LANG === 'en' ? 'estimated' : 'geschätzt') + ' ' + pages + ' ' + pageLabel;
         }
         document.getElementById('text').addEventListener('input', updateCharCount);
         updateCharCount();
 
-        // Auto-Refresh der Vorschau mit kurzer Verzögerung (Debounce)
         let debounceTimer = null;
         function scheduleRender() {
             clearTimeout(debounceTimer);
@@ -290,7 +343,6 @@
             banner.classList.add('hidden');
         });
 
-        // Beispieltext einfügen
         const BEISPIELE = [
             "Liebe Oma, ich hoffe es geht dir gut! Das Wetter ist heute wirklich schön, die Sonne scheint den ganzen Tag. Ich war heute mit meinen Freunden im Park spazieren und wir haben uns sehr gut unterhalten. Wann besuchst du uns wieder? Ich freue mich schon auf dich!",
             "Mein Tagebuch, heute war ein ganz besonderer Tag. Ich habe endlich mein Projekt abgeschlossen und bin sehr stolz darauf. Es war viel Arbeit, aber es hat sich gelohnt. Morgen werde ich es meiner Familie zeigen und hoffentlich gefällt es ihnen genauso gut wie mir.",
@@ -307,7 +359,6 @@
         document.getElementById('btn-pdf').addEventListener('click', () => post('/api/pdf'));
         document.getElementById('btn-png').addEventListener('click', () => post('/api/png'));
 
-        // Beim Öffnen einen Beispieltext anzeigen
         document.getElementById('text').value = BEISPIELE[0];
         updateCharCount();
         post('/api/render');

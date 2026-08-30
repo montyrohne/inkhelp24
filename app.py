@@ -10,7 +10,7 @@ import io
 import os
 import zipfile
 
-from flask import Flask, request, render_template, send_file, jsonify
+from flask import Flask, request, render_template, send_file, jsonify, redirect, url_for, g
 
 from handwriter import Handwriter
 
@@ -31,6 +31,38 @@ SLIDER_KEYS = [
 ]
 
 app = Flask(__name__)
+SUPPORTED_LANGS = {"de": "Deutsch", "en": "English"}
+
+
+def detect_lang():
+    lang = request.cookies.get("lang")
+    if lang in SUPPORTED_LANGS:
+        return lang
+
+    country = (
+        request.headers.get("CF-IPCountry")
+        or request.headers.get("X-Country-Code")
+        or request.headers.get("X-Forwarded-Country")
+    )
+    if country and country.lower() == "de":
+        return "de"
+
+    browser_lang = request.accept_languages.best_match(SUPPORTED_LANGS.keys())
+    return browser_lang or "de"
+
+
+@app.before_request
+def set_language_context():
+    g.lang = detect_lang()
+
+
+@app.route("/set_lang/<lang>")
+def set_lang(lang):
+    if lang not in SUPPORTED_LANGS:
+        lang = "de"
+    response = redirect(request.referrer or url_for("start"))
+    response.set_cookie("lang", lang, max_age=31536000, samesite="Lax")
+    return response
 
 
 def make_writer(font_size, line_spacing, paper, font_name, data):
@@ -75,27 +107,27 @@ def _payload_common(data):
 
 @app.route("/")
 def start():
-    return render_template("start.html")
+    return render_template("start.html", lang=g.lang)
 
 
 @app.route("/builder")
 def index():
-    return render_template("index.html", fonts=sorted(FONTS.keys()))
+    return render_template("index.html", fonts=sorted(FONTS.keys()), lang=g.lang)
 
 
 @app.route("/impressum")
 def impressum():
-    return render_template("impressum.html")
+    return render_template("impressum.html", lang=g.lang)
 
 
 @app.route("/datenschutz")
 def datenschutz():
-    return render_template("datenschutz.html")
+    return render_template("datenschutz.html", lang=g.lang)
 
 
 @app.route("/nutzungsbedingungen")
 def nutzungsbedingungen():
-    return render_template("nutzungsbedingungen.html")
+    return render_template("nutzungsbedingungen.html", lang=g.lang)
 
 
 @app.route("/api/render", methods=["POST"])

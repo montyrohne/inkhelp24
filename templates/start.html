@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inkhelp24 – Deine Handschrift</title>
+    <title>inkhelp24 – {% if lang == 'en' %}Your handwriting{% else %}Deine Handschrift{% endif %}</title>
     <style>
         :root {
             --accent: #4f46e5;
@@ -105,6 +105,33 @@
             transform: translateY(-2px);
             box-shadow: 0 16px 38px rgba(79, 70, 229, 0.5);
         }
+        .lang-switcher {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.75);
+            border: 1px solid rgba(79,70,229,0.12);
+            border-radius: 999px;
+            padding: 6px;
+            margin-bottom: 18px;
+        }
+        .lang-switcher a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 999px;
+            transition: all 0.15s ease;
+        }
+        .lang-switcher a.active {
+            background: linear-gradient(135deg, var(--accent), var(--violet));
+            color: white;
+            box-shadow: 0 8px 22px rgba(79, 70, 229, 0.25);
+        }
         .features {
             display: grid;
             grid-template-columns: repeat(4, minmax(200px, 1fr));
@@ -149,7 +176,6 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 18px;
-            margin-bottom: 18px;
         }
         .footer-links a {
             color: #4b5563;
@@ -161,63 +187,12 @@
         .footer-links a:hover {
             opacity: 0.8;
         }
-        .cookie-banner {
-            width: min(100%, 1240px);
-            margin: 0 auto;
-            padding: 18px 20px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(79,70,229,0.12), rgba(236,72,153,0.12));
-            border: 1px solid rgba(124, 58, 237, 0.18);
-            box-shadow: 0 16px 40px rgba(124, 58, 237, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            text-align: left;
-        }
-        .cookie-banner.hidden {
-            display: none;
-        }
-        .cookie-banner p {
-            flex: 1;
-            color: #374151;
-            font-size: 14px;
-            line-height: 1.55;
-        }
-        .cookie-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .cookie-btn {
-            border: none;
-            border-radius: 12px;
-            padding: 10px 16px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            transition: transform 0.15s ease;
-        }
-        .cookie-btn:hover {
-            transform: translateY(-1px);
-        }
-        .cookie-btn.accept {
-            background: linear-gradient(135deg, var(--accent), var(--violet));
-            color: white;
-            box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
-        }
-        .cookie-btn.decline {
-            background: rgba(255,255,255,0.7);
-            color: #374151;
-            border: 1px solid rgba(79,70,229,0.15);
-        }
         @media (max-width: 720px) {
             body { padding-left: 18px; padding-right: 18px; }
             .logo-name { font-size: 36px; }
             .logo-badge { width: 48px; height: 48px; }
             h1 { font-size: 2.6rem; }
             .features { grid-template-columns: repeat(2, 1fr); }
-            .cookie-banner { flex-direction: column; align-items: flex-start; }
         }
         @media (max-width: 420px) {
             .features { grid-template-columns: 1fr; }
@@ -226,18 +201,53 @@
 </head>
 <body>
     <div class="hero">
+        <div class="lang-switcher">
+            <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
+            <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+        </div>
+
         <div class="logo">
             <span class="logo-badge">✍️</span>
             <span class="logo-name">inkhelp24</span>
         </div>
 
+        {% if lang == 'en' %}
+        <h1>Turn your text into<br>authentic <span class="grad">handwriting</span></h1>
+        <p class="sub">
+            Welcome to <strong>inkhelp24</strong>! Enter your text and turn it into a natural-looking handwritten note
+            as an image or PDF, with your own paper style and personal handwriting.
+        </p>
+        <a class="cta" href="/builder">Get started&nbsp;→</a>
+
+        <div class="features">
+            <div class="feature">
+                <div class="ico">✍️</div>
+                <div class="t">Authentic handwriting</div>
+                <div class="d">5 natural fonts with character and flow</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📄</div>
+                <div class="t">Choose paper</div>
+                <div class="d">Ruled, grid, dot or vintage paper</div>
+            </div>
+            <div class="feature">
+                <div class="ico">🎨</div>
+                <div class="t">Custom details</div>
+                <div class="d">Slant, margins, dates and more</div>
+            </div>
+            <div class="feature">
+                <div class="ico">📥</div>
+                <div class="t">PDF &amp; PNG</div>
+                <div class="d">Download all pages as files</div>
+            </div>
+        </div>
+        {% else %}
         <h1>Verwandle deinen Text in<br>echte <span class="grad">Handschrift</span></h1>
         <p class="sub">
             Willkommen bei <strong>inkhelp24</strong>! Gib deinen Text ein und lass ihn
             in eine möglichst natürlich wirkende, handgeschriebene Notiz verwandeln –
             als Bild oder PDF, mit eigenem Papier und persönlicher Handschrift.
         </p>
-
         <a class="cta" href="/builder">Los geht's&nbsp;→</a>
 
         <div class="features">
@@ -262,6 +272,7 @@
                 <div class="d">Download aller Seiten als Datei</div>
             </div>
         </div>
+        {% endif %}
 
         <div class="site-footer">
             <div class="footer-links">
@@ -269,31 +280,7 @@
                 <a href="/datenschutz">Datenschutz</a>
                 <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
             </div>
-
-            <div id="cookie-banner" class="cookie-banner">
-                <p>Wir verwenden nur technisch notwendige Cookies bzw. Speicherungen und einen kleinen Cookie-Hinweis für die gesetzlich nötige Transparenz. Mit Ihrer Auswahl bestätigen Sie den aktuellen Hinweis.</p>
-                <div class="cookie-actions">
-                    <button class="cookie-btn accept" type="button">Akzeptieren</button>
-                    <button class="cookie-btn decline" type="button">Nur technisch nötig</button>
-                </div>
-            </div>
         </div>
     </div>
-
-    <script>
-        const banner = document.getElementById('cookie-banner');
-        const accepted = localStorage.getItem('inkhelp24_cookie_consent');
-        if (accepted) {
-            banner.classList.add('hidden');
-        }
-        document.querySelector('.cookie-btn.accept')?.addEventListener('click', () => {
-            localStorage.setItem('inkhelp24_cookie_consent', 'accepted');
-            banner.classList.add('hidden');
-        });
-        document.querySelector('.cookie-btn.decline')?.addEventListener('click', () => {
-            localStorage.setItem('inkhelp24_cookie_consent', 'essential-only');
-            banner.classList.add('hidden');
-        });
-    </script>
 </body>
 </html>
