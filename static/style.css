@@ -147,8 +147,14 @@ body {
 .topbar {
     max-width: 1320px;
     margin: 0 auto 8px;
+}
+
+.topbar-inner {
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .home-button {
@@ -165,6 +171,7 @@ body {
     color: var(--accent);
     text-decoration: none;
     z-index: 1;
+    margin-top: 10px;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
