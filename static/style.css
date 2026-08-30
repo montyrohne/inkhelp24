@@ -147,21 +147,31 @@ body {
 .home-button {
     position: fixed;
     top: 18px;
-    right: 18px;
-    width: 44px;
-    height: 44px;
+    left: 18px;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 14px;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(79, 70, 229, 0.18);
     box-shadow: 0 10px 22px rgba(79, 70, 229, 0.12);
     color: var(--accent);
-    font-size: 20px;
     text-decoration: none;
     z-index: 40;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-button svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    stroke: currentColor;
+    stroke-width: 2.1;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .home-button:hover {
