@@ -144,41 +144,6 @@ body {
     margin: 0 auto;
 }
 
-.home-button {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(79, 70, 229, 0.18);
-    box-shadow: 0 8px 18px rgba(79, 70, 229, 0.12);
-    color: var(--accent);
-    text-decoration: none;
-    z-index: 50;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.home-button svg {
-    width: 15px;
-    height: 15px;
-    display: block;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.home-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.18);
-}
-
 .feedback-box {
     background: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(168, 85, 247, 0.12), rgba(236, 72, 153, 0.12));
     border: 1px solid rgba(124, 58, 237, 0.18);
