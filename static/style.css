@@ -295,15 +295,29 @@ h2 {
     top: 24px;
 }
 
+.section-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 22px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
 .section-title {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--muted);
-    margin: 22px 0 12px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
+}
+
+.section-note {
+    font-size: 10px;
+    font-weight: 700;
+    color: #6b7280;
+    letter-spacing: 0.02em;
 }
 
 .section-title:first-of-type {
