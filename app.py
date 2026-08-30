@@ -32,6 +32,32 @@ SLIDER_KEYS = [
 
 app = Flask(__name__)
 SUPPORTED_LANGS = {"de": "Deutsch", "en": "English", "es": "Español"}
+COUNTRY_TO_LANG = {
+    "de": "de",
+    "at": "de",
+    "ch": "de",
+    "en": "en",
+    "gb": "en",
+    "us": "en",
+    "es": "es",
+    "mx": "es",
+    "ar": "es",
+    "cl": "es",
+    "co": "es",
+    "pe": "es",
+    "ec": "es",
+    "uy": "es",
+    "py": "es",
+    "bo": "es",
+    "ve": "es",
+    "cu": "es",
+    "do": "es",
+    "gt": "es",
+    "hn": "es",
+    "ni": "es",
+    "pa": "es",
+    "sv": "es",
+}
 
 
 def detect_lang():
@@ -46,8 +72,9 @@ def detect_lang():
     )
     if country:
         country_code = country.lower()
-        if country_code in {"de", "en", "es"}:
-            return country_code
+        mapped = COUNTRY_TO_LANG.get(country_code)
+        if mapped in SUPPORTED_LANGS:
+            return mapped
 
     browser_lang = request.accept_languages.best_match(SUPPORTED_LANGS.keys())
     if browser_lang in SUPPORTED_LANGS:

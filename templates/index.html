@@ -195,6 +195,19 @@
                 example: 'Example text',
                 placeholder: 'Enter text and click Preview.',
                 statusError: 'Error',
+            },
+            es: {
+                running: 'Procesando...',
+                previewCreated: 'Vista previa creada',
+                pages: 'página',
+                png: 'Archivos PNG descargados (ZIP).',
+                pdf: 'PDF descargado.',
+                chars: 'caracteres',
+                estimated: 'aprox.',
+                page: 'página',
+                example: 'Texto de ejemplo',
+                placeholder: 'Escribe el texto y pulsa Vista previa.',
+                statusError: 'Error',
             }
         };
 
@@ -249,10 +262,11 @@
 
         function pagesFromResult(pages) {
             preview.innerHTML = '';
+            const pageLabel = LANG === 'en' ? 'Page ' : LANG === 'es' ? 'Página ' : 'Seite ';
             pages.forEach((b64, i) => {
                 const img = document.createElement('img');
                 img.src = 'data:image/png;base64,' + b64;
-                img.alt = (LANG === 'en' ? 'Page ' : 'Seite ') + (i + 1);
+                img.alt = pageLabel + (i + 1);
                 img.classList.add('page-img');
                 preview.appendChild(img);
             });
@@ -308,8 +322,12 @@
             const text = document.getElementById('text').value;
             const chars = text.length;
             const pages = Math.max(1, Math.ceil(chars / 300));
-            const pageLabel = pages === 1 ? (LANG === 'en' ? 'page' : 'Seite') : (LANG === 'en' ? 'pages' : 'Seiten');
-            charCount.textContent = chars + ' ' + (LANG === 'en' ? 'characters' : 'Zeichen') + ' · ' + (LANG === 'en' ? 'estimated' : 'geschätzt') + ' ' + pages + ' ' + pageLabel;
+            const pageLabel = pages === 1
+                ? (LANG === 'en' ? 'page' : LANG === 'es' ? 'página' : 'Seite')
+                : (LANG === 'en' ? 'pages' : LANG === 'es' ? 'páginas' : 'Seiten');
+            const charsLabel = LANG === 'en' ? 'characters' : LANG === 'es' ? 'caracteres' : 'Zeichen';
+            const estimatedLabel = LANG === 'en' ? 'estimated' : LANG === 'es' ? 'aprox.' : 'geschätzt';
+            charCount.textContent = chars + ' ' + charsLabel + ' · ' + estimatedLabel + ' ' + pages + ' ' + pageLabel;
         }
         document.getElementById('text').addEventListener('input', updateCharCount);
         updateCharCount();
@@ -348,6 +366,10 @@
             "Hi Mom, I hope you are well. The weather is really lovely today and the sky is bright all day. I went for a walk in the park with my friends and we had a great time. When will you visit us again? I am already looking forward to seeing you!",
             "My diary, today was a very special day. I finally finished my project and I am very proud of it. It was a lot of work, but it was worth it. Tomorrow I will show it to my family and I hope they like it as much as I do.",
             "Dear Mrs. Miller, I hereby confirm receipt of your letter dated the 15th of this month. I would be pleased to accommodate your request and provide the requested documents. Please do not hesitate to contact me if you have any questions. Kind regards.",
+        ] : LANG === 'es' ? [
+            "Hola mamá, espero que estés bien. El tiempo está realmente precioso hoy y el cielo está despejado todo el día. Hoy he dado un paseo por el parque con mis amigos y lo hemos pasado genial. ¿Cuándo nos visitas otra vez? ¡Ya estoy deseando verte!",
+            "Mi diario: hoy ha sido un día muy especial. Por fin he terminado mi proyecto y estoy muy orgulloso de él. Ha supuesto mucho trabajo, pero ha merecido la pena. Mañana se lo mostraré a mi familia y espero que les guste tanto como a mí.",
+            "Estimada señora Miller, por la presente confirmo la recepción de su carta del 15 de este mes. Con mucho gusto atenderé su solicitud y le facilitaré la documentación pedida. Si tiene cualquier duda, no dude en ponerse en contacto conmigo. Un cordial saludo.",
         ] : [
             "Liebe Oma, ich hoffe es geht dir gut! Das Wetter ist heute wirklich schön, die Sonne scheint den ganzen Tag. Ich war heute mit meinen Freunden im Park spazieren und wir haben uns sehr gut unterhalten. Wann besuchst du uns wieder? Ich freue mich schon auf dich!",
             "Mein Tagebuch, heute war ein ganz besonderer Tag. Ich habe endlich mein Projekt abgeschlossen und bin sehr stolz darauf. Es war viel Arbeit, aber es hat sich gelohnt. Morgen werde ich es meiner Familie zeigen und hoffentlich gefällt es ihnen genauso gut wie mir.",
