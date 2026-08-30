@@ -143,9 +143,9 @@
                 <p id="status" class="status"><span id="spinner" class="spinner" style="display:none"></span></p>
 
                 <div class="footer-links">
-                    <a href="/impressum">Impressum</a>
-                    <a href="/datenschutz">Datenschutz</a>
-                    <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
+                    <a href="/impressum">{% if lang == 'en' %}Imprint{% else %}Impressum{% endif %}</a>
+                    <a href="/datenschutz">{% if lang == 'en' %}Privacy Policy{% else %}Datenschutz{% endif %}</a>
+                    <a href="/nutzungsbedingungen">{% if lang == 'en' %}Terms{% else %}Nutzungsbedingungen{% endif %}</a>
                 </div>
             </div>
 
@@ -343,7 +343,11 @@
             banner.classList.add('hidden');
         });
 
-        const BEISPIELE = [
+        const BEISPIELE = LANG === 'en' ? [
+            "Hi Mom, I hope you are well. The weather is really lovely today and the sky is bright all day. I went for a walk in the park with my friends and we had a great time. When will you visit us again? I am already looking forward to seeing you!",
+            "My diary, today was a very special day. I finally finished my project and I am very proud of it. It was a lot of work, but it was worth it. Tomorrow I will show it to my family and I hope they like it as much as I do.",
+            "Dear Mrs. Miller, I hereby confirm receipt of your letter dated the 15th of this month. I would be pleased to accommodate your request and provide the requested documents. Please do not hesitate to contact me if you have any questions. Kind regards.",
+        ] : [
             "Liebe Oma, ich hoffe es geht dir gut! Das Wetter ist heute wirklich schön, die Sonne scheint den ganzen Tag. Ich war heute mit meinen Freunden im Park spazieren und wir haben uns sehr gut unterhalten. Wann besuchst du uns wieder? Ich freue mich schon auf dich!",
             "Mein Tagebuch, heute war ein ganz besonderer Tag. Ich habe endlich mein Projekt abgeschlossen und bin sehr stolz darauf. Es war viel Arbeit, aber es hat sich gelohnt. Morgen werde ich es meiner Familie zeigen und hoffentlich gefällt es ihnen genauso gut wie mir.",
             "Sehr geehrte Frau Müller, hiermit bestätige ich den Eingang Ihres Schreibens vom 15. des Monats. Gerne komme ich Ihrem Wunsch nach und stelle Ihnen die angeforderten Unterlagen zu. Für Rückfragen stehe ich Ihnen jederzeit gerne zur Verfügung. Mit freundlichen Grüßen.",

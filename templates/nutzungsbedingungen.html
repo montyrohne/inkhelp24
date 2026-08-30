@@ -1,13 +1,45 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutzungsbedingungen | inkhelp24</title>
+    <title>{% if lang == 'en' %}Terms of Use{% else %}Nutzungsbedingungen{% endif %} | inkhelp24</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main class="legal-page">
+        {% if lang == 'en' %}
+        <h1>Terms of Use</h1>
+
+        <p>By using this website, you agree to the following conditions.</p>
+
+        <h2>1. Purpose of the website</h2>
+        <p>The website allows the creation of handwritten-looking text and PDF variants from user input. We provide the features without guarantee and based on available technologies.</p>
+
+        <h2>2. User obligations</h2>
+        <p>The user agrees not to upload illegal, abusive, defamatory, discriminatory, or otherwise prohibited content. The use of the website must not be used to harass others, violate third-party rights, or break laws.</p>
+
+        <h2>3. Copyright</h2>
+        <p>All content, texts, designs, and functions of the website are protected by German copyright and other rights. Reproduction or distribution without appropriate permission is prohibited.</p>
+
+        <h2>4. No automated user monitoring</h2>
+        <p>This website does not use advertising or tracking technologies for profiling, no analytics pixels, and no usage collection for advertising purposes. Basic technical data from the server log and the local consent reminder are limited to the necessary minimum.</p>
+
+        <h2>5. Liability</h2>
+        <p>We accept no liability for damages arising from the use of the website or technical failures, unless caused by intentional misconduct or gross negligence.</p>
+
+        <h2>6. Changes</h2>
+        <p>We reserve the right to change these terms of use at any time. Changes will be published on the website.</p>
+
+        <h2>7. Applicable law</h2>
+        <p>German law applies. The place of jurisdiction is, where legally permissible, the seat of the responsible party.</p>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/impressum">Imprint</a>
+            <a href="/datenschutz">Privacy Policy</a>
+        </div>
+        {% else %}
         <h1>Nutzungsbedingungen</h1>
 
         <p>Mit der Nutzung dieser Website erklären Sie sich mit den folgenden Bedingungen einverstanden.</p>
@@ -38,6 +70,7 @@
             <a href="/impressum">Impressum</a>
             <a href="/datenschutz">Datenschutz</a>
         </div>
+        {% endif %}
     </main>
 </body>
 </html>

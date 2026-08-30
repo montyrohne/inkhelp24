@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum | inkhelp24</title>
+    <title>{% if lang == 'en' %}Imprint{% else %}Impressum{% endif %} | inkhelp24</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main class="legal-page">
+        {% if lang == 'en' %}
+        <h1>Imprint</h1>
+
+        <p><strong>inkhelp24</strong><br>
+        Monty Rohne<br>
+        Rosenstr. 10<br>
+        88255 Baindt<br>
+        Germany</p>
+
+        <p>Email: inkhelp24@gmail.com<br>
+        Website: inkhelp24.de</p>
+
+        <h2>Represented by</h2>
+        <p>Monty Rohne</p>
+
+        <h2>VAT ID</h2>
+        <p>Not available.</p>
+
+        <h2>Disclaimer</h2>
+        <p>The content on this website has been created with the greatest care. We do not guarantee the correctness, completeness, or timeliness of the content.</p>
+
+        <p>We are not liable for damages arising from the use or non-use of the information published here. All content is created with care, but without guarantee.</p>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/datenschutz">Privacy Policy</a>
+            <a href="/nutzungsbedingungen">Terms</a>
+        </div>
+        {% else %}
         <h1>Impressum</h1>
 
         <p><strong>inkhelp24</strong><br>
@@ -35,6 +64,7 @@
             <a href="/datenschutz">Datenschutz</a>
             <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
         </div>
+        {% endif %}
     </main>
 </body>
 </html>

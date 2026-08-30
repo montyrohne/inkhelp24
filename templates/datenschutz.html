@@ -1,13 +1,66 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutz | inkhelp24</title>
+    <title>{% if lang == 'en' %}Privacy Policy{% else %}Datenschutz{% endif %} | inkhelp24</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main class="legal-page">
+        {% if lang == 'en' %}
+        <h1>Privacy Policy</h1>
+
+        <p>We take the protection of your personal data seriously. This privacy policy explains which data is processed when you visit and use this website and for what purpose.</p>
+
+        <h2>1. Responsible party</h2>
+        <p>The data controller for this website is:</p>
+        <p>Monty Rohne<br>
+        Rosenstr. 10<br>
+        88255 Baindt<br>
+        Germany<br>
+        Email: inkhelp24@gmail.com</p>
+
+        <h2>2. Purpose of processing</h2>
+        <p>This website provides a text-to-handwriting generator. Data processing serves only the provision, use, and technical security of this functionality.</p>
+
+        <h2>3. Server log files</h2>
+        <p>When you access this website, technical data is automatically processed and transmitted by your browser to the server. This includes in particular:</p>
+        <ul>
+            <li>IP address</li>
+            <li>Date and time of access</li>
+            <li>Browser type and version</li>
+            <li>Referrer URL</li>
+            <li>Hostname of the accessing computer</li>
+        </ul>
+        <p>These data are processed to ensure the technical functionality, security, and troubleshooting of the website. Direct identification of an individual is usually not possible. No use for advertising purposes or disclosure to third parties takes place.</p>
+
+        <h2>4. Text input in the generator</h2>
+        <p>The text you enter is only processed to generate the preview, PNG, or PDF output. It is not permanently stored, not saved in a database, and not passed on to third parties.</p>
+        <p>Processing is exclusively for the functionality of the website. After output is generated, processing generally ends immediately. There is no long-term storage of user text unless a separate contractual arrangement explicitly provides for it.</p>
+
+        <h2>5. Cookies and local storage</h2>
+        <p>This website does not use tracking cookies, advertising cookies, or analysis tools. A small cookie notice may be stored locally in the browser to remember your choice regarding the cookie information. This local storage serves solely to satisfy privacy requirements and is not intended for user tracking.</p>
+        <p>No personal data is processed for advertising or marketing purposes.</p>
+
+        <h2>6. No transfer to third parties</h2>
+        <p>We do not sell, rent, or share personal data with third parties. Data disclosure to service providers may only occur when technically necessary for website operation and legal requirements are met.</p>
+
+        <h2>7. Rights of the data subject</h2>
+        <p>You have the right to access, rectify, erase, restrict processing, and object to the processing of your data. Please contact us at inkhelp24@gmail.com.</p>
+
+        <h2>8. Contact</h2>
+        <p>If you have questions about privacy or the processing of your data, please contact inkhelp24@gmail.com.</p>
+
+        <h2>9. Changes</h2>
+        <p>We reserve the right to adapt this privacy policy if necessary. A revised version will be published on the website.</p>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/impressum">Imprint</a>
+            <a href="/nutzungsbedingungen">Terms</a>
+        </div>
+        {% else %}
         <h1>Datenschutzerklärung</h1>
 
         <p>Wir nehmen den Schutz Ihrer personenbezogenen Daten ernst. Diese Datenschutzerklärung informiert Sie darüber, welche Daten beim Besuch und der Nutzung dieser Website verarbeitet werden und zu welchem Zweck.</p>
@@ -59,6 +112,7 @@
             <a href="/impressum">Impressum</a>
             <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
         </div>
+        {% endif %}
     </main>
 </body>
 </html>

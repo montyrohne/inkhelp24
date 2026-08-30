@@ -48,7 +48,9 @@ def detect_lang():
         return "de"
 
     browser_lang = request.accept_languages.best_match(SUPPORTED_LANGS.keys())
-    return browser_lang or "de"
+    if browser_lang == "de":
+        return "de"
+    return browser_lang or "en"
 
 
 @app.before_request
