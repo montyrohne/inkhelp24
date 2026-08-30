@@ -144,43 +144,31 @@ body {
     margin: 0 auto;
 }
 
-.topbar {
-    max-width: 1320px;
-    margin: 0 auto 8px;
-}
-
-.topbar-inner {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-}
-
 .home-button {
-    position: static;
-    width: 36px;
-    height: 36px;
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(79, 70, 229, 0.14);
-    box-shadow: 0 8px 18px rgba(79, 70, 229, 0.09);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(79, 70, 229, 0.18);
+    box-shadow: 0 10px 22px rgba(79, 70, 229, 0.12);
     color: var(--accent);
     text-decoration: none;
-    z-index: 1;
-    margin-top: 10px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    z-index: 40;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .home-button svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: block;
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 2.1;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -188,8 +176,7 @@ body {
 
 .home-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(79, 70, 229, 0.14);
-    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.18);
 }
 
 .feedback-box {

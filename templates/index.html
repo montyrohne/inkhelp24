@@ -30,25 +30,20 @@
     </style>
 </head>
 <body>
-    <div class="topbar">
-        <div class="topbar-inner">
-            <a href="/" class="home-button" aria-label="Home">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 10.5L12 3l9 7.5"></path>
-                    <path d="M5 9.5V20h14V9.5"></path>
-                    <path d="M10 20v-6h4v6"></path>
-                </svg>
-            </a>
-
-            <div class="lang-switcher">
-                <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
-                <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
-                <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
-            </div>
-        </div>
-    </div>
+    <a href="/" class="home-button" aria-label="Home">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5"></path>
+            <path d="M5 9.5V20h14V9.5"></path>
+            <path d="M10 20v-6h4v6"></path>
+        </svg>
+    </a>
 
     <div class="container">
+        <div class="lang-switcher">
+            <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
+            <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
+        </div>
 
         <section class="feedback-box collapsed" id="feedback-box">
             <button type="button" class="feedback-toggle" id="feedback-toggle" aria-expanded="false">
