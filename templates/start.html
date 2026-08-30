@@ -275,23 +275,21 @@
     </style>
 </head>
 <body>
-    <div class="top-row">
-        <a href="/" class="home-button" aria-label="Home">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 10.5L12 3l9 7.5"></path>
-                <path d="M5 9.5V20h14V9.5"></path>
-                <path d="M10 20v-6h4v6"></path>
-            </svg>
-        </a>
+    <a href="/" class="home-button" aria-label="Home">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5"></path>
+            <path d="M5 9.5V20h14V9.5"></path>
+            <path d="M10 20v-6h4v6"></path>
+        </svg>
+    </a>
 
+    <div class="hero">
         <div class="lang-switcher">
             <a href="/set_lang/de" class="{% if lang == 'de' %}active{% endif %}">DE</a>
             <a href="/set_lang/en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
             <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
         </div>
-    </div>
 
-    <div class="hero">
         <div class="logo">
             <span class="logo-badge">✍️</span>
             <span class="logo-name">inkhelp24</span>
