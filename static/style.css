@@ -505,3 +505,30 @@ textarea:focus {
         padding: 20px 16px;
     }
 }
+
+@media (max-width: 520px) {
+    .slider {
+        gap: 8px;
+        align-items: center;
+    }
+
+    .slider label {
+        flex: 0 0 118px;
+        min-width: 118px;
+        margin: 0;
+        text-align: left;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    .slider .val {
+        flex: 0 0 42px;
+        text-align: left;
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    .check-field label {
+        padding-top: 18px;
+    }
+}
