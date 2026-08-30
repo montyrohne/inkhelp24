@@ -8,7 +8,10 @@ wirkender Bilder und PDFs.
 import base64
 import io
 import os
+import smtplib
+import ssl
 import zipfile
+from email.message import EmailMessage
 
 from flask import Flask, request, render_template, send_file, jsonify, redirect, url_for, g
 
@@ -137,6 +140,39 @@ def _payload_common(data):
     return (text, font_size, line_spacing, paper, font_name), None, None
 
 
+def send_feedback_email(name, email, message):
+    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = int(os.getenv("SMTP_PORT", "465"))
+    smtp_user = os.getenv("SMTP_USER", "inkhelp24@gmail.com")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    email_to = os.getenv("EMAIL_TO", "inkhelp24@gmail.com")
+
+    if not smtp_password:
+        raise RuntimeError("SMTP_PASSWORD ist nicht gesetzt. Bitte in der Umgebung hinterlegen.")
+
+    subject = "Neues Feedback von inkhelp24"
+    body = (
+        "Neue Rückmeldung von der Website\n\n"
+        f"Name: {name or 'Nicht angegeben'}\n"
+        f"E-Mail: {email or 'Nicht angegeben'}\n\n"
+        "Nachricht:\n"
+        f"{message}\n"
+    )
+
+    msg = EmailMessage()
+    msg["Subject"] = subject
+    msg["From"] = smtp_user
+    msg["To"] = email_to
+    msg.set_content(body)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_host, smtp_port, context=context) as server:
+        server.login(smtp_user, smtp_password)
+        server.send_message(msg)
+
+    return True
+
+
 @app.route("/")
 def start():
     return render_template("start.html", lang=g.lang)
@@ -160,6 +196,24 @@ def datenschutz():
 @app.route("/nutzungsbedingungen")
 def nutzungsbedingungen():
     return render_template("nutzungsbedingungen.html", lang=g.lang)
+
+
+@app.route("/api/feedback", methods=["POST"])
+def feedback():
+    data = request.get_json(silent=True) or {}
+    name = (data.get("name") or "").strip()
+    email = (data.get("email") or "").strip()
+    message = (data.get("message") or "").strip()
+
+    if not message:
+        return jsonify({"error": "Bitte schreibe deinen Feedback-Text."}), 400
+
+    try:
+        send_feedback_email(name, email, message)
+    except Exception as exc:
+        return jsonify({"error": f"E-Mail konnte nicht gesendet werden: {exc}"}), 500
+
+    return jsonify({"success": True, "message": "Danke! Dein Feedback wurde gesendet."}), 200
 
 
 @app.route("/api/render", methods=["POST"])

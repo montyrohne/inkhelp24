@@ -37,6 +37,34 @@
             <a href="/set_lang/es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
         </div>
 
+        <section class="feedback-box">
+            <div class="feedback-header">
+                <span class="feedback-badge">💬 Feedback</span>
+                <span class="feedback-tag">{% if lang == 'en' %}Help us improve{% elif lang == 'es' %}Ayúdanos a mejorar{% else %}Hilf uns zu verbessern{% endif %}</span>
+            </div>
+
+            <form id="feedback-form" class="feedback-form">
+                <div class="feedback-grid">
+                    <div class="field">
+                        <label for="feedback-name">{% if lang == 'en' %}Name{% elif lang == 'es' %}Nombre{% else %}Name{% endif %}</label>
+                        <input id="feedback-name" type="text" placeholder="{% if lang == 'en' %}Optional{% elif lang == 'es' %}Opcional{% else %}Optional{% endif %}">
+                    </div>
+                    <div class="field">
+                        <label for="feedback-email">E-Mail</label>
+                        <input id="feedback-email" type="email" placeholder="name@email.de">
+                    </div>
+                </div>
+
+                <label for="feedback-message">{% if lang == 'en' %}What is good, what could be better, what is missing?{% elif lang == 'es' %}¿Qué está bien, qué se puede mejorar y qué falta?{% else %}Was ist gut, was kann besser werden und was fehlt?{% endif %}</label>
+                <textarea id="feedback-message" rows="4" placeholder="{% if lang == 'en' %}Write your suggestion here...{% elif lang == 'es' %}Escribe tu sugerencia aquí...{% else %}Schreibe hier deine Idee oder Rückmeldung...{% endif %}"></textarea>
+
+                <div class="feedback-actions">
+                    <button type="submit" class="btn primary">{% if lang == 'en' %}Send feedback{% elif lang == 'es' %}Enviar feedback{% else %}Feedback senden{% endif %}</button>
+                </div>
+                <p id="feedback-status" class="feedback-status" aria-live="polite"></p>
+            </form>
+        </section>
+
         <h1><span class="logo">✍️</span> {% if lang == 'en' %}Handwriting Generator{% elif lang == 'es' %}Generador de caligrafía{% else %}Text zu Handschrift{% endif %}</h1>
         <p class="subtitle">{% if lang == 'en' %}Turn your text into a natural-looking handwritten note.{% elif lang == 'es' %}Convierte tu texto en una nota manuscrita natural y auténtica.{% else %}Verwandelt deinen Text in eine möglichst echt wirkende handgeschriebene Notiz.{% endif %}</p>
 
@@ -250,6 +278,44 @@
         const preview = document.getElementById('preview');
         const status = document.getElementById('status');
         const charCount = document.getElementById('char-count');
+
+        document.getElementById('feedback-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('feedback-name').value.trim();
+            const email = document.getElementById('feedback-email').value.trim();
+            const message = document.getElementById('feedback-message').value.trim();
+            const feedbackStatus = document.getElementById('feedback-status');
+
+            if (!message) {
+                feedbackStatus.textContent = LANG === 'en' ? 'Please write a message first.' : LANG === 'es' ? 'Escribe un mensaje primero.' : 'Bitte schreibe zuerst eine Nachricht.';
+                feedbackStatus.style.color = '#ef4444';
+                return;
+            }
+
+            feedbackStatus.textContent = LANG === 'en' ? 'Sending...' : LANG === 'es' ? 'Enviando...' : 'Wird gesendet...';
+            feedbackStatus.style.color = '#4f46e5';
+
+            try {
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ name, email, message })
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Unbekannter Fehler');
+                }
+
+                document.getElementById('feedback-form').reset();
+                feedbackStatus.textContent = data.message || (LANG === 'en' ? 'Thanks for your feedback!' : LANG === 'es' ? '¡Gracias por tu feedback!' : 'Danke für dein Feedback!');
+                feedbackStatus.style.color = '#15803d';
+            } catch (error) {
+                feedbackStatus.textContent = error.message || 'Fehler';
+                feedbackStatus.style.color = '#ef4444';
+            }
+        });
 
         function setBusy(busy) {
             document.querySelectorAll('.btn').forEach(b => {
