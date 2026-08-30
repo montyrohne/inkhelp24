@@ -13,9 +13,12 @@ import ssl
 import zipfile
 from email.message import EmailMessage
 
+from dotenv import load_dotenv
 from flask import Flask, request, render_template, send_file, jsonify, redirect, url_for, g
 
 from handwriter import Handwriter
+
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONTS_DIR = os.path.join(BASE_DIR, "fonts")
