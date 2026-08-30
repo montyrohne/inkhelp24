@@ -121,17 +121,17 @@
 
                 <div class="section-title">{% if lang == 'en' %}Details{% elif lang == 'es' %}Detalles{% else %}Details{% endif %}</div>
                 <div class="slider">
-                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% elif lang == 'es' %}Líneas tachadas{% else %}Durchstreichungen{% endif %}</label>
+                    <label for="durchstreichung">{% if lang == 'en' %}Crossed-out lines{% elif lang == 'es' %}Líneas tachadas{% else %}Durchstreichungen{% endif %} {% if lang == 'en' %}(use with caution){% elif lang == 'es' %}(con precaución){% else %}(mit Vorsicht zu genießen){% endif %}</label>
                     <input type="range" id="durchstreichung" min="0" max="100" value="0">
                     <span class="val" data-for="durchstreichung">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% elif lang == 'es' %}Letras faltantes{% else %}Fehlende Buchstaben{% endif %}</label>
+                    <label for="fehlende">{% if lang == 'en' %}Missing letters{% elif lang == 'es' %}Letras faltantes{% else %}Fehlende Buchstaben{% endif %} {% if lang == 'en' %}(use with caution){% elif lang == 'es' %}(con precaución){% else %}(mit Vorsicht zu genießen){% endif %}</label>
                     <input type="range" id="fehlende" min="0" max="100" value="0">
                     <span class="val" data-for="fehlende">0%</span>
                 </div>
                 <div class="slider">
-                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% elif lang == 'es' %}Errores ortográficos{% else %}Rechtschreibfehler{% endif %}</label>
+                    <label for="rechtschreibfehler">{% if lang == 'en' %}Spelling mistakes{% elif lang == 'es' %}Errores ortográficos{% else %}Rechtschreibfehler{% endif %} {% if lang == 'en' %}(use with caution){% elif lang == 'es' %}(con precaución){% else %}(mit Vorsicht zu genießen){% endif %}</label>
                     <input type="range" id="rechtschreibfehler" min="0" max="100" value="0">
                     <span class="val" data-for="rechtschreibfehler">0%</span>
                 </div>
