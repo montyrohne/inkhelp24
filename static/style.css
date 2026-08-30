@@ -329,9 +329,10 @@ h2 {
 
 .layout {
     display: grid;
-    grid-template-columns: 460px 1fr;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.42fr);
     gap: 24px;
     align-items: start;
+    width: 100%;
 }
 
 .panel {
@@ -340,11 +341,13 @@ h2 {
     border-radius: var(--radius);
     padding: 22px;
     box-shadow: var(--shadow);
+    min-width: 0;
 }
 
 .preview-panel {
     position: sticky;
     top: 24px;
+    min-height: 680px;
 }
 
 .settings-group {
