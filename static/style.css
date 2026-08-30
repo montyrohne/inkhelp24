@@ -330,19 +330,23 @@ textarea:focus {
 .slider {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 14px;
+    margin-left: -10px;
 }
 
 .slider label {
-    flex: 0 0 155px;
+    flex: 0 0 148px;
     margin: 0;
     font-weight: 500;
     white-space: nowrap;
+    text-align: left;
+    padding-left: 0;
 }
 
 .slider input[type="range"] {
     flex: 1;
+    min-width: 0;
     height: 4px;
     appearance: none;
     -webkit-appearance: none;
@@ -510,19 +514,21 @@ textarea:focus {
     .slider {
         gap: 8px;
         align-items: center;
+        margin-left: -14px;
     }
 
     .slider label {
-        flex: 0 0 118px;
-        min-width: 118px;
+        flex: 0 0 110px;
+        min-width: 110px;
         margin: 0;
         text-align: left;
         white-space: normal;
         line-height: 1.2;
+        padding-left: 0;
     }
 
     .slider .val {
-        flex: 0 0 42px;
+        flex: 0 0 40px;
         text-align: left;
         margin-left: 0;
         padding-left: 0;
