@@ -300,8 +300,8 @@ h2 {
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
-    margin: 22px 0 12px;
-    padding-top: 16px;
+    margin: 30px 0 16px;
+    padding-top: 18px;
     border-top: 1px solid var(--border);
 }
 
@@ -445,6 +445,22 @@ textarea:focus {
     margin-left: -10px;
 }
 
+.details-slider {
+    margin-left: 26px;
+    margin-bottom: 12px;
+}
+
+.details-slider label {
+    flex: 0 0 150px;
+}
+
+.details-slider input[type="range"] {
+    flex: 0 0 220px;
+    max-width: 220px;
+    min-width: 180px;
+    height: 3px;
+}
+
 .slider label {
     flex: 0 0 148px;
     margin: 0;
@@ -467,8 +483,8 @@ textarea:focus {
 
 .slider input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--accent);
     border: 2px solid #fff;
@@ -477,8 +493,8 @@ textarea:focus {
 }
 
 .slider input[type="range"]::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--accent);
     border: 2px solid #fff;
